@@ -36,7 +36,7 @@ This a modified version of the original ggkm code by Ahijit Dasgupta. It
 generates a Kaplan-Meier plot using ggplot2
 }
 \examples{
-fit <- survfit(Surv(time,status) ~ rx, data = survival::colon)
+fit <- survival::survfit(survival::Surv(time,status) ~ rx, data = survival::colon)
 plot_KM_curve(fit, timeby=500)
 }
 \author{

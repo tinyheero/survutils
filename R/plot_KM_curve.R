@@ -17,7 +17,7 @@
 #' @author Abhijit Dasgupta with contributions by Gil Tomas
 #' \url{http://statbandit.wordpress.com/2011/03/08/an-enhanced-kaplan-meier-plot/}
 #' @examples
-#' fit <- survfit(Surv(time,status) ~ rx, data = survival::colon)
+#' fit <- survival::survfit(survival::Surv(time,status) ~ rx, data = survival::colon)
 #' plot_KM_curve(fit, timeby=500)
 #' @export
 plot_KM_curve <- function(sfit, returns = FALSE, xlabs = "Time", 
@@ -46,11 +46,11 @@ plot_KM_curve <- function(sfit, returns = FALSE, xlabs = "Time",
                       strata = factor(ystratalabs, levels=levels(.df$strata)), 
                       upper = 1, lower = 1)
 
-  .df <- rbind.fill(zeros, .df)
+  .df <- plyr::rbind.fill(zeros, .df)
   d <- length(levels(.df$strata))
 
   p <- ggplot2::ggplot(.df, ggplot2::aes(time, surv, group = strata)) +
-    ggplot2::geom_step(aes(color = strata), size = 0.7) +
+    ggplot2::geom_step(ggplot2::aes(color = strata), size = 0.7) +
     ggplot2::theme(axis.title.x = ggplot2::element_text(vjust = 0.5)) +
     ggplot2::scale_x_continuous(xlabs, breaks = times, limits = c(0, max(sfit$time))) +
     ggplot2::scale_y_continuous(ylabs, limits = c(0, 1)) +
@@ -65,7 +65,7 @@ plot_KM_curve <- function(sfit, returns = FALSE, xlabs = "Time",
       sdiff <- survival::survdiff(eval(sfit$call$formula), data = eval(sfit$call$data))
       pval <- pchisq(sdiff$chisq, length(sdiff$n)-1, lower.tail = FALSE)
       pvaltxt <- ifelse(pval < 0.0001, "p < 0.0001", paste("p =", signif(pval, 3)))
-      p <- p + annotate("text", x = 0.6 * max(sfit$time), y = 0.1, label = pvaltxt)
+      p <- p + ggplot2::annotate("text", x = 0.6 * max(sfit$time), y = 0.1, label = pvaltxt)
   }
   p
 }
