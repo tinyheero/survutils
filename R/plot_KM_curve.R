@@ -14,11 +14,10 @@
 #' @param pval logical: add the pvalue to the plot?
 #' @return a ggplot is made. if returns=TRUE, then an ggplot object
 #'   is returned
-#' @author Abhijit Dasgupta with contributions by Gil Tomas
-#' \url{http://statbandit.wordpress.com/2011/03/08/an-enhanced-kaplan-meier-plot/}
+#' @author Abhijit Dasgupta \url{https://gist.github.com/araastat/9927677}
 #' @examples
 #' fit <- survival::survfit(survival::Surv(time,status) ~ rx, data = survival::colon)
-#' plot_KM_curve(fit, timeby=500)
+#' plot_KM_curve(fit, timeby = 500)
 #' @export
 plot_KM_curve <- function(sfit, returns = FALSE, xlabs = "Time", 
                  ylabs = "survival probability", ystratalabs = NULL, 

@@ -37,10 +37,9 @@ generates a Kaplan-Meier plot using ggplot2
 }
 \examples{
 fit <- survival::survfit(survival::Surv(time,status) ~ rx, data = survival::colon)
-plot_KM_curve(fit, timeby=500)
+plot_KM_curve(fit, timeby = 500)
 }
 \author{
-Abhijit Dasgupta with contributions by Gil Tomas
-\url{http://statbandit.wordpress.com/2011/03/08/an-enhanced-kaplan-meier-plot/}
+Abhijit Dasgupta \url{https://gist.github.com/araastat/9927677}
 }
 
