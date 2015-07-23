@@ -12,15 +12,15 @@
 #' get_cox_summary(cox.res)
 # Description: This function is used to get the cox-regression results
 get_cox_summary <- function(cox.res, ci = 95){
-	beta <- coef(cox.res)
-	se <- sqrt(diag(vcov(cox.res)))
-	HR <- exp(beta)
-	HRse <- HR * se
+  beta <- coef(cox.res)
+  se <- sqrt(diag(vcov(cox.res)))
+  HR <- exp(beta)
+  HRse <- HR * se
 
   # Calculate the tail to use for the confidence interval
   ci.tail <- 1 - ((100 - ci)/2)/100
 
-	outDf <- data.frame(coef = beta, 
+  outDf <- data.frame(coef = beta, 
                       se = se, 
                       z = beta/se, 
                       p = 1 - pchisq((beta/se)^2, 1),
