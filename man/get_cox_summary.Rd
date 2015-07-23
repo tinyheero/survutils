@@ -4,10 +4,12 @@
 \alias{get_cox_summary}
 \title{Summarizes the Cox Regression Analsysis}
 \usage{
-get_cox_summary(cox.res)
+get_cox_summary(cox.res, ci = 95)
 }
 \arguments{
-\item{cox.res}{A cox regression analysis results object.}
+\item{cox.res}{The result of a coxph fit.}
+
+\item{ci}{The confidence interval to calculate.}
 }
 \value{
 A data.frame that summarizes the results.
