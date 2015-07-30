@@ -12,7 +12,7 @@ To see the full list of exported functions:
 
 ```{r}
 library("survutils")
-ls("package/survutils")
+ls("package:survutils")
 ```
 
 A quick overview of some of the key functions:
