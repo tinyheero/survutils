@@ -20,7 +20,7 @@
 get_c_stat <- function(in.df, endpoint, endpoint.code, prog.factor, tau.val) {
 
   message(paste0("Endpoint: ", endpoint))
-  message(paste0("Endpoint code: ", endpoint.cod
+  message(paste0("Endpoint code: ", endpoint.code))
   message(paste0("Prognostic Factor: ", paste(prog.factor, collapse = ", ")))
 
   # Prepare input data.frame to be used with survC1::Inf.Cval
