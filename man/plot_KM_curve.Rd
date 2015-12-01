@@ -26,6 +26,8 @@ plot_KM_curve(sfit, returns = FALSE, xlabs = "Time",
 \item{main}{plot title}
 
 \item{pval}{logical: add the pvalue to the plot?}
+
+\item{pval}{logical: add the pvalue to the plot?}
 }
 \value{
 a ggplot is made. if returns=TRUE, then an ggplot object

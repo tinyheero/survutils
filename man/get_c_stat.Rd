@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_c_stat.R
 \name{get_c_stat}
 \alias{get_c_stat}
-\title{Calculate C-statistic}
+\title{Calculate C-statistics}
 \usage{
 get_c_stat(in.df, endpoint, endpoint.code, prog.factor, tau.val)
 }
@@ -21,8 +21,8 @@ get_c_stat(in.df, endpoint, endpoint.code, prog.factor, tau.val)
 data.frame containing the c-statistic, 95% CI, and standard error
 }
 \description{
-Wraps around the Inf.Cval function from the survC1 R package to calculate
-C-statistics
+Wrapper around the Inf.Cval function from the survC1 R package to calculate
+C-statistics.
 }
 \examples{
 # Example taken from survC1

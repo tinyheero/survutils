@@ -12,13 +12,14 @@
 #' @param timeby numeric: control the granularity along the time-axis
 #' @param main plot title
 #' @param pval logical: add the pvalue to the plot?
+#' @param pval logical: add the pvalue to the plot?
 #' @return a ggplot is made. if returns=TRUE, then an ggplot object
 #'   is returned
 #' @author Abhijit Dasgupta \url{https://gist.github.com/araastat/9927677}
+#' @export
 #' @examples
 #' fit <- survival::survfit(survival::Surv(time,status) ~ rx, data = survival::colon)
 #' plot_KM_curve(fit, timeby = 500)
-#' @export
 plot_KM_curve <- function(sfit, returns = FALSE, xlabs = "Time", 
                  ylabs = "survival probability", ystratalabs = NULL, 
                  ystrataname = NULL, timeby = 100, main = "Kaplan-Meier Plot", 
@@ -54,17 +55,20 @@ plot_KM_curve <- function(sfit, returns = FALSE, xlabs = "Time",
     ggplot2::scale_x_continuous(xlabs, breaks = times, limits = c(0, max(sfit$time))) +
     ggplot2::scale_y_continuous(ylabs, limits = c(0, 1)) +
     ggplot2::theme(panel.grid.minor = ggplot2::element_blank()) +
-    ggplot2::theme(legend.position = c(ifelse(m < 10, .28, .35), 
-                                       ifelse(d < 4, .25, .35))) +
+#    ggplot2::theme(legend.position = c(ifelse(m < 10, .28, .35), 
+#                                       ifelse(d < 4, .25, .35))) +
     ggplot2::theme(legend.key = ggplot2::element_rect(colour = NA)) +
     ggplot2::theme(plot.margin = grid::unit(c(0, 1, .5, ifelse(m < 10, 1.5, 2.5)), "lines")) +
     ggplot2::ggtitle(main)
   
   if (pval) {
-      sdiff <- survival::survdiff(eval(sfit$call$formula), data = eval(sfit$call$data))
+      sdiff <- survival::survdiff(eval(sfit$call$formula), 
+                                  data = eval(sfit$call$data))
       pval <- pchisq(sdiff$chisq, length(sdiff$n)-1, lower.tail = FALSE)
       pvaltxt <- ifelse(pval < 0.0001, "p < 0.0001", paste("p =", signif(pval, 3)))
-      p <- p + ggplot2::annotate("text", x = 0.6 * max(sfit$time), y = 0.1, label = pvaltxt)
+      p <- p + 
+        ggplot2::annotate("text", x = 0.6 * max(sfit$time), y = 0.1, 
+                          label = pvaltxt)
   }
   p
 }
