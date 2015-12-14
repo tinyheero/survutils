@@ -3,6 +3,10 @@
 #' This a modified version of the original ggkm code by Ahijit Dasgupta. It
 #' generates a Kaplan-Meier plot using ggplot2
 #'
+#' This function replicates the functionality provided in ggfortify. Strongly 
+#' suggest users to use that. Additionally, \code{plot_KM_curve} currently does 
+#' not work when the input survival object contains only one group.
+#'
 #' @param sfit a \code{\link[survival]{survfit}} object
 #' @param returns logical: if \code{TRUE}, return an ggplot object
 #' @param xlabs x-axis label
