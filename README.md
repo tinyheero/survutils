@@ -1,6 +1,12 @@
 # survutils
 
-An R package for Survival Analysis. To install this package using devtools:
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/survutils)](http://cran.r-project.org/package=survutils)
+
+An R package for Survival Analysis. 
+
+# How to Install
+
+To install this package using devtools:
 
 ```{r}
 devtools::install_github("tinyheero/survutils")
