@@ -11,5 +11,6 @@ Imports:
 	survC1 (>= 1.0.2),
 	survival (>= 2.38.3),
 	grid (>= 3.1.2),
-	ggplot2 (>= 1.0.0)
+	ggplot2 (>= 1.0.0),
+	purrr (>= 0.1.0)
 LazyData: true
