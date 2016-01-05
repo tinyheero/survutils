@@ -29,6 +29,11 @@ plot_KM_curve <- function(sfit, returns = FALSE, xlabs = "Time",
                  ystrataname = NULL, timeby = 100, main = "Kaplan-Meier Plot", 
                  pval = TRUE, ...) {
 
+  .Deprecated("autoplot", "ggfortify", 
+              paste("This function duplicates what ggfortify::autplot does. 
+                    Recommend using that instead. See
+                    http://rpubs.com/sinhrks/plot_surv"))
+
   if (is.null(ystratalabs)) {
     ystratalabs <- as.character(levels(summary(sfit)$strata))
   }
