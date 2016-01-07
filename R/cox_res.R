@@ -16,23 +16,18 @@
 #' @export
 #' @examples
 #' library("survival")
-#'
-#' # Run Univariate Cox Regression on Entire data.frame
 #' endpoint <- "time"
 #' endpoint.code <- "status"
+#'
+#' # Run Univariate Cox Regression on Entire data.frame
 #' features <- "age"
 #' get_cox_res(colon, endpoint, endpoint.code, features)
 #'
 #' # Run Multivariate Cox Regression on Entire data.frame
-#' endpoint <- "time"
-#' endpoint.code <- "status"
 #' features <- c("age", "obstruct")
 #' get_cox_res(colon, endpoint, endpoint.code, features)
 #
 #' # Run Multivariate Cox Regression For Each rx Group
-#' endpoint <- "time"
-#' endpoint.code <- "status"
-#' features <- c("age", "obstruct")
 #' group <- "rx"
 #' get_cox_res(colon, endpoint, endpoint.code, features, group)
 get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
@@ -64,4 +59,61 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
       dplyr::rowwise() %>%
       broom::tidy(cox.res, exponentiate = TRUE)
   }
+}
+
+#' Plot Cox Regression Results
+#' 
+#' \code{plot_cox_res} takes the output from \code{get_cox_res} and generates
+#' a forest plot showing the hazard ratio and confidence interval of the cox
+#' cox regression. 
+#' 
+#' @param data.frame output from \code{get_cox_res}.
+#' @param xlab x-axis label.
+#' @param ylab y-axis label.
+#' @param group Vector containing the column name(s) of the grouping variables.
+#'   This is only applicable if multivariate cox regression was run. 
+#'   The data will be faceted for each group. This currently only supports at
+#'   most two column names (i.e. two-dimensions).
+#' @return Forest plot of cox regression results in the ggplot framework.
+#' @export
+#' @examples
+#' library("survival")
+#' 
+#' in.df <- colon
+#' endpoint <- "time"
+#' endpoint.code <- "status"
+#' 
+#' # Run and Plot Multivariate Cox Regression on Entire data.frame
+#' features <- c("age", "obstruct")
+#' cox.res.df <- get_cox_res(colon, endpoint, endpoint.code, features)
+#' plot_cox_res(cox.res.df)
+#' 
+#' # Run and Plot Multivariate Cox Regression For Each rx Group
+#' group <- "rx"
+#' cox.res.df <- get_cox_res(colon, endpoint, endpoint.code, features, group)
+#' plot_cox_res(cox.res.df, group)
+#' 
+#' # Change x and y labels
+#' plot_cox_res(cox.res.df, group, xlab = "Hazard Ratio", y = "Feature")
+plot_cox_res <- function(cox.res.df, group, xlab, ylab) {
+  p <- cox.res.df %>%
+    ggplot2::ggplot(
+      ggplot2::aes_string(y = "term", x = "estimate", xmin = "conf.high", 
+                          xmax = "conf.low")) +
+    ggplot2::geom_errorbarh(height = 0.1) +
+    ggplot2::geom_point()
+    
+  if (!missing(group)) {
+    p <- p + ggplot2::facet_grid(reformulate(groups))
+  }
+
+  if (!missing(xlab)) {
+    p <- p + ggplot2::xlab(xlab)
+  }
+
+  if (!missing(ylab)) {
+    p <- p + ggplot2::ylab(ylab)
+  }
+
+  p
 }
