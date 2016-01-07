@@ -1,3 +1,11 @@
+# survutils 0.0.0.9007
+
+* Added the `plot_cox_res` function
+
+# survutils 0.0.0.9006
+
+* Added the `get_cox_res` function
+
 # survutils 0.0.0.9005
 
 * Added the `get_surv_prob` function

@@ -104,7 +104,7 @@ plot_cox_res <- function(cox.res.df, group, xlab, ylab) {
     ggplot2::geom_point()
     
   if (!missing(group)) {
-    p <- p + ggplot2::facet_grid(reformulate(groups))
+    p <- p + ggplot2::facet_grid(reformulate(group))
   }
 
   if (!missing(xlab)) {

@@ -30,8 +30,8 @@ get_surv_prob(fit, times)
 # Get Survival Probabilities for Each rx Group
 library("purrr")
 colon \%>\%
- split(.$rx) \%>\%
- map(~ survfit(Surv(time, status) ~ 1, data = .)) \%>\%
- map(get_surv_prob, times)
+  split(.$rx) \%>\%
+  map(~ survfit(Surv(time, status) ~ 1, data = .)) \%>\%
+  map(get_surv_prob, times)
 }
 
