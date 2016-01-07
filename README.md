@@ -2,7 +2,10 @@
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/survutils)](http://cran.r-project.org/package=survutils)
 
-An R package for Survival Analysis. 
+An R package for Survival Analysis. This package mainly serves as a wrapper around various survival analysis functions (e.g. `coxph`) to provide a more inituitive interface. It has the following features:
+
+* Run univariate or multivariate cox regression (`get_cox_res`)
+* Generate C-statistics (`get_c_stat`)
 
 # How to Install
 
