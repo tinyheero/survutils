@@ -75,7 +75,7 @@ This runs a multivariate cox regression on the entire set of data. We can plot t
 plot_cox_res(cox.res.df)
 ```
 
-![](README-images/get_cox_res_example-1.svg)
+![](README-images/get_cox_res_example-1.png)
 
 This gives us a forest plot with the hazard ratio and confidence evidence for each feature. If we are interested in running cox regression within each treatment group, we can make use of the `group` parameter.
 
@@ -100,6 +100,6 @@ Notice how the output data.frame now has cox regression results for each treatme
 plot_cox_res(cox.res.df)
 ```
 
-![](README-images/get_cox_res_group_example-1.svg)
+![](README-images/get_cox_res_group_example-1.png)
 
 This will facet the groups so that we can visualize the cox regression results for each treatment group.
