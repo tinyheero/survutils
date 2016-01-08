@@ -84,7 +84,7 @@ kable(cox.res.df)
 Notice how the output data.frame now has cox regression results for each treatment group (i.e. Obs, Lev, Lev+5FU). We can also plot these results very easily:
 
 ```{r, get_cox_res_group_example}
-plot_cox_res(cox.res.df)
+plot_cox_res(cox.res.df, group = group)
 ```
 
 This will facet the groups so that we can visualize the cox regression results for each treatment group.
