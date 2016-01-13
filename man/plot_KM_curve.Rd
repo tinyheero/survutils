@@ -37,6 +37,11 @@ a ggplot is made. if returns=TRUE, then an ggplot object
 This a modified version of the original ggkm code by Ahijit Dasgupta. It
 generates a Kaplan-Meier plot using ggplot2
 }
+\details{
+This function replicates the functionality provided in ggfortify. Strongly
+suggest users to use that. Additionally, \code{plot_KM_curve} currently does
+not work when the input survival object contains only one group.
+}
 \examples{
 fit <- survival::survfit(survival::Surv(time,status) ~ rx, data = survival::colon)
 plot_KM_curve(fit, timeby = 500)

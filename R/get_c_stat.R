@@ -9,6 +9,7 @@
 #' @param prog.factor Column name of the prognostic factor to test
 #' @param tau Tau to be used for C-statistics inference
 #' @return data.frame containing the c-statistic, 95% CI, and standard error
+#' @export
 #' @examples 
 #' # Example taken from survC1
 #' library("survival")

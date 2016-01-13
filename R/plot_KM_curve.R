@@ -3,6 +3,10 @@
 #' This a modified version of the original ggkm code by Ahijit Dasgupta. It
 #' generates a Kaplan-Meier plot using ggplot2
 #'
+#' This function replicates the functionality provided in ggfortify. Strongly 
+#' suggest users to use that. Additionally, \code{plot_KM_curve} currently does 
+#' not work when the input survival object contains only one group.
+#'
 #' @param sfit a \code{\link[survival]{survfit}} object
 #' @param returns logical: if \code{TRUE}, return an ggplot object
 #' @param xlabs x-axis label
@@ -24,6 +28,11 @@ plot_KM_curve <- function(sfit, returns = FALSE, xlabs = "Time",
                  ylabs = "survival probability", ystratalabs = NULL, 
                  ystrataname = NULL, timeby = 100, main = "Kaplan-Meier Plot", 
                  pval = TRUE, ...) {
+
+  .Deprecated("autoplot", "ggfortify", 
+              paste("This function duplicates what ggfortify::autoplot does.",
+                    "Recommend using that instead. See",
+                    "http://rpubs.com/sinhrks/plot_surv"))
 
   if (is.null(ystratalabs)) {
     ystratalabs <- as.character(levels(summary(sfit)$strata))
