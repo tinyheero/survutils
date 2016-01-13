@@ -51,7 +51,7 @@ head(colon) %>%
 
 The relevant columns are:
 
-* `age` and `obstruct`: These are the features we want to regress on>
+* `age` and `obstruct`: These are the features we want to regress on.
 * `time`: Time to event.
 * `status`: Event status (1 for event; 0 for non-event).
 * `rx`: Different treatment groups.
