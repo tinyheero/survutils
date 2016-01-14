@@ -1,4 +1,4 @@
-#' Calculate Log Rank P-value
+#' Run Log-Rank Test
 #'
 #' \code{get_logrank_res} is a wrapper over the survival::survdiff() function
 #' return the direct results or the log rank p-value only if specified.
@@ -16,7 +16,7 @@
 #' fit <- survfit(Surv(time, status) ~ rx, data = colon)
 #' get_logrank_res(formula(fit), colon)
 #' 
-#' # Get only log rank p-value
+#' # Get only log-rank p-value
 #' get_logrank_res(formula(fit), colon, return.p = TRUE)
 get_logrank_res <- function(in.formula, in.df, return.p = FALSE) {
 
