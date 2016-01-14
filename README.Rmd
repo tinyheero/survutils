@@ -20,11 +20,20 @@ knitr::opts_chunk$set(
 
 An R package for Survival Analysis. This package mainly serves as a wrapper around various survival analysis functions (e.g. `coxph`) to provide a more inituitive interface. It has the following features:
 
+## Cox Regression
+
 * `get_cox_res`: Run univariate or multivariate cox regression.
 * `plot_cox_res`: Generates a forest plot of the univariate or multivariate cox regression results from `get_cox_res`.
-* `get_c_stat`: Calculate C-statistics. 
+
+## Kaplan Meier Estimates/Cuvres
+
 * `get_surv_prob`: Calculates the survival probability at specified times from a survival curve. 
 * `get_nrisk_tbl`: Provides a number at risk table as [typically seen in publications](https://mcfromnz.wordpress.com/2011/11/06/kaplan-meier-survival-plot-with-at-risk-table/).
+* `get_logrank_res`: Runs a logrank analysis.
+
+## Other
+
+* `get_c_stat`: Calculate C-statistics. 
 
 # How to Install
 
