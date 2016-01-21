@@ -101,7 +101,7 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
 #' # Change x and y labels
 #' plot_cox_res(cox.res.df, group, x.lab = "Hazard Ratio", y.lab = "Feature")
 #' 
-# Adding colors
+#' # Adding colors
 #' cox.res.df %>%
 #'   mutate(sig_flag = p.value < 0.05) %>%
 #'   plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature", 
