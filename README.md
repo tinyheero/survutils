@@ -4,14 +4,14 @@ survutils
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/survutils)](http://cran.r-project.org/package=survutils)
 
-An R package for Survival Analysis. This package mainly serves as a wrapper around various survival analysis functions (e.g. `coxph`, `survdiff`) to provide a more inituitive interface. It has the following features (grouped by major topics):
+An R package for Survival Analysis. This package mainly serves as a wrapper around various survival analysis functions (e.g. `coxph`, `survdiff`) to provide a more inituitive interface and output in [tidy data format](http://vita.had.co.nz/papers/tidy-data.pdf). It has the following features (grouped by major topics):
 
 Cox Regression
 
 -   `get_cox_res`: Run univariate or multivariate cox regression.
 -   `plot_cox_res`: Generates a forest plot of the univariate or multivariate cox regression results from `get_cox_res`.
 
-Kaplan Meier Estimates/Cuvres
+Kaplan Meier Estimates/Curves
 
 -   `get_surv_prob`: Calculates the survival probability at specified times from a survival curve.
 -   `get_nrisk_tbl`: Provides a number at risk table as [typically seen in publications](https://mcfromnz.wordpress.com/2011/11/06/kaplan-meier-survival-plot-with-at-risk-table/).
@@ -111,4 +111,12 @@ plot_cox_res(cox.res.df, group = group)
 
 ![](README-images/get_cox_res_group_example-1.png)
 
-This will facet the groups so that we can visualize the cox regression results for each treatment group.
+This will facet the groups so that we can visualize the cox regression results for each treatment group. There are also other options (see `?plot_cox_res` for full options) such as the ability to add colors:
+
+``` r
+cox.res.df %>%
+  mutate(sig_flag = p.value < 0.05) %>%
+  plot_cox_res(cox.res.df, group = group, color.col = "sig_flag")
+```
+
+![](README-images/get_cox_res_group_colors_example-1.png)
