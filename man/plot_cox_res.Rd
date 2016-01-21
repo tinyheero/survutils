@@ -23,8 +23,11 @@ most two column names (i.e. two-dimensions).}
 
 \item{color.legend.name}{Title for the color legend.}
 
-\item{coord.flip}{Flips the plot such that x-axis becomes the y-axis and vice
-versa.}
+\item{coord.flip}{By default hazard ratio and its confidence interval is
+plotted on the y-axis using ggplot2::geom_errorbarh(). If this is set to
+TRUE, then this information is plotted along the x-axis using
+ggplot2::geom_errorbar(). This means that the x.lab and y.lab will be
+flipped to.}
 
 \item{data.frame}{output from \code{get_cox_res}.}
 }

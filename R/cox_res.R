@@ -77,8 +77,11 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
 #' @param y.col Column name that contains the values for the y-values. 
 #' @param color.col Column name that contains color groups.
 #' @param color.legend.name Title for the color legend.
-#' @param coord.flip Flips the plot such that x-axis becomes the y-axis and vice 
-#'  versa. 
+#' @param coord.flip By default hazard ratio and its confidence interval is 
+#'   plotted on the y-axis using ggplot2::geom_errorbarh(). If this is set to
+#'   TRUE, then this information is plotted along the x-axis using 
+#'   ggplot2::geom_errorbar(). This means that the x.lab and y.lab will be 
+#'   flipped to. 
 #' @return Forest plot of cox regression results in the ggplot framework.
 #' @export
 #' @examples
@@ -119,12 +122,22 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
 plot_cox_res <- function(cox.res.df, group, x.lab, y.lab, y.col = "term",
                          color.col, color.legend.name, coord.flip = FALSE) {
 
-  p <- cox.res.df %>%
-    ggplot2::ggplot(
-      ggplot2::aes_string(y = y.col, x = "estimate", xmin = "conf.high", 
-                          xmax = "conf.low")) +
-    ggplot2::geom_errorbarh(height = 0.1) +
-    ggplot2::geom_point()
+  if (!coord.flip) {
+    p <- cox.res.df %>%
+      ggplot2::ggplot(
+        ggplot2::aes_string(y = y.col, x = "estimate", xmin = "conf.high", 
+                            xmax = "conf.low")) +
+      ggplot2::geom_errorbarh(height = 0.1) +
+      ggplot2::geom_point()
+  } else {
+    message("Flipping Axis")
+    p <- cox.res.df %>%
+      ggplot2::ggplot(
+        ggplot2::aes_string(x = y.col, y = "estimate", ymin = "conf.high", 
+                            ymax = "conf.low")) +
+      ggplot2::geom_errorbar(width = 0.1) +
+      ggplot2::geom_point()
+  }
 
   if (!missing(color.col)) {
     p <- p + ggplot2::aes_string(color = color.col)
@@ -149,10 +162,5 @@ plot_cox_res <- function(cox.res.df, group, x.lab, y.lab, y.col = "term",
     p <- p + ggplot2::ylab(y.lab)
   }
 
-  if (coord.flip) {
-    message("Flipping Axis")
-    p <- p + ggplot2::coord_flip()
-  }
-
-  p
+    p
 }
