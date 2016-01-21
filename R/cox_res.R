@@ -68,16 +68,19 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
 #' cox regression. 
 #' 
 #' @param data.frame output from \code{get_cox_res}.
-#' @param xlab x-axis label.
-#' @param ylab y-axis label.
 #' @param group Vector containing the column name(s) of the grouping variables.
 #'   This is only applicable if multivariate cox regression was run. 
 #'   The data will be faceted for each group. This currently only supports at
 #'   most two column names (i.e. two-dimensions).
+#' @param x.lab x-axis label.
+#' @param y.lab y-axis label.
+#' @param ycol Column name that contains the values for the y-values. 
 #' @return Forest plot of cox regression results in the ggplot framework.
 #' @export
 #' @examples
 #' library("survival")
+#' library("magrittr")
+#' library("dplyr")
 #' 
 #' in.df <- colon
 #' endpoint <- "time"
@@ -94,25 +97,36 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
 #' plot_cox_res(cox.res.df, group)
 #' 
 #' # Change x and y labels
-#' plot_cox_res(cox.res.df, group, xlab = "Hazard Ratio", y = "Feature")
-plot_cox_res <- function(cox.res.df, group, xlab, ylab) {
+#' plot_cox_res(cox.res.df, group, x.lab = "Hazard Ratio", y.lab = "Feature")
+#' 
+#' # Adding colors
+#' cox.res.df %>%
+#'   mutate(sig_flag = p.value < 0.05) %>%
+#'   plot_cox_res(cox.res.df, group = group, x.lab = "Hazard Ratio", 
+#'                y.lab = "Feature", color.col = "sig_flag")
+plot_cox_res <- function(cox.res.df, group, x.lab, y.lab, y.col = "term",
+                         color.col) {
   p <- cox.res.df %>%
     ggplot2::ggplot(
-      ggplot2::aes_string(y = "term", x = "estimate", xmin = "conf.high", 
+      ggplot2::aes_string(y = y.col, x = "estimate", xmin = "conf.high", 
                           xmax = "conf.low")) +
     ggplot2::geom_errorbarh(height = 0.1) +
     ggplot2::geom_point()
+
+  if (!missing(color.col)) {
+    p <- p + ggplot2::aes_string(color = color.col)
+  }
     
   if (!missing(group)) {
     p <- p + ggplot2::facet_grid(reformulate(group))
   }
 
-  if (!missing(xlab)) {
-    p <- p + ggplot2::xlab(xlab)
+  if (!missing(x.lab)) {
+    p <- p + ggplot2::xlab(x.lab)
   }
 
-  if (!missing(ylab)) {
-    p <- p + ggplot2::ylab(ylab)
+  if (!missing(y.lab)) {
+    p <- p + ggplot2::ylab(y.lab)
   }
 
   p
