@@ -77,6 +77,8 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
 #' @param y.col Column name that contains the values for the y-values. 
 #' @param color.col Column name that contains color groups.
 #' @param color.legend.name Title for the color legend.
+#' @param coord.flip Flips the plot such that x-axis becomes the y-axis and vice 
+#'  versa. 
 #' @return Forest plot of cox regression results in the ggplot framework.
 #' @export
 #' @examples
@@ -107,8 +109,15 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
 #'   plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature", 
 #'                color.col = "sig_flag", 
 #'                color.legend.name = "Significant Flag")
+#'
+#' # Flipping Plot
+#' cox.res.df %>%
+#'   mutate(sig_flag = p.value < 0.05) %>%
+#'   plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature", 
+#'                color.col = "sig_flag", 
+#'                color.legend.name = "Significant Flag", coord.flip = TRUE)
 plot_cox_res <- function(cox.res.df, group, x.lab, y.lab, y.col = "term",
-                         color.col, color.legend.name) {
+                         color.col, color.legend.name, coord.flip = FALSE) {
 
   p <- cox.res.df %>%
     ggplot2::ggplot(
@@ -138,6 +147,11 @@ plot_cox_res <- function(cox.res.df, group, x.lab, y.lab, y.col = "term",
   if (!missing(y.lab)) {
     message("Setting y-axis Title")
     p <- p + ggplot2::ylab(y.lab)
+  }
+
+  if (coord.flip) {
+    message("Flipping Axis")
+    p <- p + ggplot2::coord_flip()
   }
 
   p
