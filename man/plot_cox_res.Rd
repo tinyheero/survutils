@@ -5,7 +5,7 @@
 \title{Plot Cox Regression Results}
 \usage{
 plot_cox_res(cox.res.df, group, x.lab, y.lab, y.col = "term", color.col,
-  color.legend.name)
+  color.legend.name, coord.flip = FALSE)
 }
 \arguments{
 \item{group}{Vector containing the column name(s) of the grouping variables.
@@ -22,6 +22,9 @@ most two column names (i.e. two-dimensions).}
 \item{color.col}{Column name that contains color groups.}
 
 \item{color.legend.name}{Title for the color legend.}
+
+\item{coord.flip}{Flips the plot such that x-axis becomes the y-axis and vice
+versa.}
 
 \item{data.frame}{output from \code{get_cox_res}.}
 }
@@ -55,10 +58,18 @@ plot_cox_res(cox.res.df, group)
 # Change x and y labels
 plot_cox_res(cox.res.df, group, x.lab = "Hazard Ratio", y.lab = "Feature")
 
+# Adding colors
 cox.res.df \%>\%
   mutate(sig_flag = p.value < 0.05) \%>\%
   plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature",
                color.col = "sig_flag",
                color.legend.name = "Significant Flag")
+
+# Flipping Plot
+cox.res.df \%>\%
+  mutate(sig_flag = p.value < 0.05) \%>\%
+  plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature",
+               color.col = "sig_flag",
+               color.legend.name = "Significant Flag", coord.flip = TRUE)
 }
 

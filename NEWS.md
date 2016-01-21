@@ -1,3 +1,7 @@
+# survutils 0.0.0.9010
+
+* Adding new features for `plot_cox_res` function.
+
 # survutils 0.0.0.9007
 
 * Added the `plot_cox_res` function
