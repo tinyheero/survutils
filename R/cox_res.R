@@ -74,7 +74,9 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
 #'   most two column names (i.e. two-dimensions).
 #' @param x.lab x-axis label.
 #' @param y.lab y-axis label.
-#' @param ycol Column name that contains the values for the y-values. 
+#' @param y.col Column name that contains the values for the y-values. 
+#' @param color.col Column name that contains color groups.
+#' @param color.legend.name Title for the color legend.
 #' @return Forest plot of cox regression results in the ggplot framework.
 #' @export
 #' @examples
@@ -99,13 +101,15 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
 #' # Change x and y labels
 #' plot_cox_res(cox.res.df, group, x.lab = "Hazard Ratio", y.lab = "Feature")
 #' 
-#' # Adding colors
+# Adding colors
 #' cox.res.df %>%
 #'   mutate(sig_flag = p.value < 0.05) %>%
-#'   plot_cox_res(cox.res.df, group = group, x.lab = "Hazard Ratio", 
-#'                y.lab = "Feature", color.col = "sig_flag")
+#'   plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature", 
+#'                color.col = "sig_flag", 
+#'                color.legend.name = "Significant Flag")
 plot_cox_res <- function(cox.res.df, group, x.lab, y.lab, y.col = "term",
-                         color.col) {
+                         color.col, color.legend.name) {
+
   p <- cox.res.df %>%
     ggplot2::ggplot(
       ggplot2::aes_string(y = y.col, x = "estimate", xmin = "conf.high", 
@@ -115,6 +119,11 @@ plot_cox_res <- function(cox.res.df, group, x.lab, y.lab, y.col = "term",
 
   if (!missing(color.col)) {
     p <- p + ggplot2::aes_string(color = color.col)
+
+    if (!missing(color.legend.name)) {
+      message("Setting Color Legend Name")
+      p <- p + ggplot2::scale_color_discrete(name = color.legend.name)
+    }
   }
     
   if (!missing(group)) {
@@ -122,10 +131,12 @@ plot_cox_res <- function(cox.res.df, group, x.lab, y.lab, y.col = "term",
   }
 
   if (!missing(x.lab)) {
+    message("Setting x-axis Title")
     p <- p + ggplot2::xlab(x.lab)
   }
 
   if (!missing(y.lab)) {
+    message("Setting y-axis Title")
     p <- p + ggplot2::ylab(y.lab)
   }
 
