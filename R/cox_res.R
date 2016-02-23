@@ -68,16 +68,26 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
 #' cox regression. 
 #' 
 #' @param data.frame output from \code{get_cox_res}.
-#' @param xlab x-axis label.
-#' @param ylab y-axis label.
 #' @param group Vector containing the column name(s) of the grouping variables.
 #'   This is only applicable if multivariate cox regression was run. 
 #'   The data will be faceted for each group. This currently only supports at
 #'   most two column names (i.e. two-dimensions).
+#' @param x.lab x-axis label.
+#' @param y.lab y-axis label.
+#' @param y.col Column name that contains the values for the y-values. 
+#' @param color.col Column name that contains color groups.
+#' @param color.legend.name Title for the color legend.
+#' @param coord.flip By default hazard ratio and its confidence interval is 
+#'   plotted on the y-axis using ggplot2::geom_errorbarh(). If this is set to
+#'   TRUE, then this information is plotted along the x-axis using 
+#'   ggplot2::geom_errorbar(). This means that the x.lab and y.lab will be 
+#'   flipped to. 
 #' @return Forest plot of cox regression results in the ggplot framework.
 #' @export
 #' @examples
 #' library("survival")
+#' library("magrittr")
+#' library("dplyr")
 #' 
 #' in.df <- colon
 #' endpoint <- "time"
@@ -94,26 +104,63 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
 #' plot_cox_res(cox.res.df, group)
 #' 
 #' # Change x and y labels
-#' plot_cox_res(cox.res.df, group, xlab = "Hazard Ratio", y = "Feature")
-plot_cox_res <- function(cox.res.df, group, xlab, ylab) {
-  p <- cox.res.df %>%
-    ggplot2::ggplot(
-      ggplot2::aes_string(y = "term", x = "estimate", xmin = "conf.high", 
-                          xmax = "conf.low")) +
-    ggplot2::geom_errorbarh(height = 0.1) +
-    ggplot2::geom_point()
+#' plot_cox_res(cox.res.df, group, x.lab = "Hazard Ratio", y.lab = "Feature")
+#' 
+#' # Adding colors
+#' cox.res.df %>%
+#'   mutate(sig_flag = p.value < 0.05) %>%
+#'   plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature", 
+#'                color.col = "sig_flag", 
+#'                color.legend.name = "Significant Flag")
+#'
+#' # Flipping Plot
+#' cox.res.df %>%
+#'   mutate(sig_flag = p.value < 0.05) %>%
+#'   plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature", 
+#'                color.col = "sig_flag", 
+#'                color.legend.name = "Significant Flag", coord.flip = TRUE)
+plot_cox_res <- function(cox.res.df, group, x.lab, y.lab, y.col = "term",
+                         color.col, color.legend.name, coord.flip = FALSE) {
+
+  if (!coord.flip) {
+    p <- cox.res.df %>%
+      ggplot2::ggplot(
+        ggplot2::aes_string(y = y.col, x = "estimate", xmin = "conf.high", 
+                            xmax = "conf.low")) +
+      ggplot2::geom_errorbarh(height = 0.1) +
+      ggplot2::geom_point()
+  } else {
+    message("Flipping Axis")
+    p <- cox.res.df %>%
+      ggplot2::ggplot(
+        ggplot2::aes_string(x = y.col, y = "estimate", ymin = "conf.high", 
+                            ymax = "conf.low")) +
+      ggplot2::geom_errorbar(width = 0.1) +
+      ggplot2::geom_point()
+  }
+
+  if (!missing(color.col)) {
+    p <- p + ggplot2::aes_string(color = color.col)
+
+    if (!missing(color.legend.name)) {
+      message("Setting Color Legend Name")
+      p <- p + ggplot2::scale_color_discrete(name = color.legend.name)
+    }
+  }
     
   if (!missing(group)) {
     p <- p + ggplot2::facet_grid(reformulate(group))
   }
 
-  if (!missing(xlab)) {
-    p <- p + ggplot2::xlab(xlab)
+  if (!missing(x.lab)) {
+    message("Setting x-axis Title")
+    p <- p + ggplot2::xlab(x.lab)
   }
 
-  if (!missing(ylab)) {
-    p <- p + ggplot2::ylab(ylab)
+  if (!missing(y.lab)) {
+    message("Setting y-axis Title")
+    p <- p + ggplot2::ylab(y.lab)
   }
 
-  p
+    p
 }

@@ -4,7 +4,8 @@
 \alias{plot_cox_res}
 \title{Plot Cox Regression Results}
 \usage{
-plot_cox_res(cox.res.df, group, xlab, ylab)
+plot_cox_res(cox.res.df, group, x.lab, y.lab, y.col = "term", color.col,
+  color.legend.name, coord.flip = FALSE)
 }
 \arguments{
 \item{group}{Vector containing the column name(s) of the grouping variables.
@@ -12,9 +13,21 @@ This is only applicable if multivariate cox regression was run.
 The data will be faceted for each group. This currently only supports at
 most two column names (i.e. two-dimensions).}
 
-\item{xlab}{x-axis label.}
+\item{x.lab}{x-axis label.}
 
-\item{ylab}{y-axis label.}
+\item{y.lab}{y-axis label.}
+
+\item{y.col}{Column name that contains the values for the y-values.}
+
+\item{color.col}{Column name that contains color groups.}
+
+\item{color.legend.name}{Title for the color legend.}
+
+\item{coord.flip}{By default hazard ratio and its confidence interval is
+plotted on the y-axis using ggplot2::geom_errorbarh(). If this is set to
+TRUE, then this information is plotted along the x-axis using
+ggplot2::geom_errorbar(). This means that the x.lab and y.lab will be
+flipped to.}
 
 \item{data.frame}{output from \code{get_cox_res}.}
 }
@@ -28,6 +41,8 @@ cox regression.
 }
 \examples{
 library("survival")
+library("magrittr")
+library("dplyr")
 
 in.df <- colon
 endpoint <- "time"
@@ -44,6 +59,20 @@ cox.res.df <- get_cox_res(colon, endpoint, endpoint.code, features, group)
 plot_cox_res(cox.res.df, group)
 
 # Change x and y labels
-plot_cox_res(cox.res.df, group, xlab = "Hazard Ratio", y = "Feature")
+plot_cox_res(cox.res.df, group, x.lab = "Hazard Ratio", y.lab = "Feature")
+
+# Adding colors
+cox.res.df \%>\%
+  mutate(sig_flag = p.value < 0.05) \%>\%
+  plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature",
+               color.col = "sig_flag",
+               color.legend.name = "Significant Flag")
+
+# Flipping Plot
+cox.res.df \%>\%
+  mutate(sig_flag = p.value < 0.05) \%>\%
+  plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature",
+               color.col = "sig_flag",
+               color.legend.name = "Significant Flag", coord.flip = TRUE)
 }
 

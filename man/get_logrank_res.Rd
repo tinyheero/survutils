@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_logrank_res.R
 \name{get_logrank_res}
 \alias{get_logrank_res}
-\title{Calculate Log Rank P-value}
+\title{Run Log-Rank Test}
 \usage{
 get_logrank_res(in.formula, in.df, return.p = FALSE)
 }
@@ -27,7 +27,7 @@ return the direct results or the log rank p-value only if specified.
 fit <- survfit(Surv(time, status) ~ rx, data = colon)
 get_logrank_res(formula(fit), colon)
 
-# Get only log rank p-value
+# Get only log-rank p-value
 get_logrank_res(formula(fit), colon, return.p = TRUE)
 }
 
