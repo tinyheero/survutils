@@ -43,7 +43,7 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
 
   # Setup Cox Formula
   features.formula <- paste(features, collapse = "+")
-  resp.var <- paste0("Surv(", endpoint, ", ", endpoint.code, ")")
+  resp.var <- paste0("survival::Surv(", endpoint, ", ", endpoint.code, ")")
   cox.formula <- as.formula(paste0(resp.var, "~", features.formula))
 
   # Running Cox Regression

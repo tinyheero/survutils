@@ -1,6 +1,6 @@
 Package: survutils
 Title: Utility Functions for Survival Analysis
-Version: 0.0.0.9007
+Version: 0.0.0.9008
 Authors@R: person("Fong Chun", "Chan", , "fongchunchan@gmail.com", role = c("aut", "cre"))
 Description: This package contains functions to work with survival analysis
 License: MIT + file LICENSE
