@@ -47,6 +47,7 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group) {
   cox.formula <- as.formula(paste0(resp.var, "~", features.formula))
 
   # Running Cox Regression
+	# exponentiate = TRUE is used to convert into hazard ratios
   if (missing(group)) {
     # Run Cox Regression on Whole data.frame
     survival::coxph(formula = cox.formula, data = in.df) %>%
