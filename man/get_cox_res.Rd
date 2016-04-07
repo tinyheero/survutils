@@ -4,7 +4,8 @@
 \alias{get_cox_res}
 \title{Run Cox Regression on a Single or Multiple Groups of Data}
 \usage{
-get_cox_res(in.df, endpoint, endpoint.code, features, group)
+get_cox_res(in.df, endpoint, endpoint.code, features, group,
+  test.type = c("multicox", "unicox"))
 }
 \arguments{
 \item{in.df}{Input data.frame.}
@@ -17,14 +18,18 @@ get_cox_res(in.df, endpoint, endpoint.code, features, group)
 
 \item{group}{Column name containing the groups to run cox regression on. If,
 specified, cox regression is run separately for each group.}
+
+\item{test.type}{Indicate whether to perform univariate or multivariate cox
+regression.}
 }
 \value{
 Cox regression results returned in a tidy data.frame format.
 }
 \description{
 \code{get_cox_res} is a wrapper around coxph. It can run
-univariate or multivariate cox regression. If the group parameter is used,
-then cox regression is run for each group separately.
+univariate or multivariate cox regression based on the test.type parameter.
+If the group parameter is used, then cox regression is run for each group
+separately.
 }
 \details{
 The data is returned in a broom::tidy data.frame format.
@@ -34,15 +39,26 @@ library("survival")
 endpoint <- "time"
 endpoint.code <- "status"
 
-# Run Univariate Cox Regression on Entire data.frame
+# Run Univariate Cox Regression on Single Feature
 features <- "age"
-get_cox_res(colon, endpoint, endpoint.code, features)
+get_cox_res(colon, endpoint, endpoint.code, features, test.type = "unicox")
 
-# Run Multivariate Cox Regression on Entire data.frame
-features <- c("age", "obstruct")
-get_cox_res(colon, endpoint, endpoint.code, features)
-# Run Multivariate Cox Regression For Each rx Group
+# Run Univariate Cox Regression on Multiple Features
+multi.features <- c("age", "obstruct")
+get_cox_res(colon, endpoint, endpoint.code, multi.features,
+            test.type = "unicox")
+
+# Run Univariate Cox Regression on Multiple Features For Each rx group
 group <- "rx"
-get_cox_res(colon, endpoint, endpoint.code, features, group)
+get_cox_res(colon, endpoint, endpoint.code, multi.features, group,
+            test.type = "unicox")
+
+# Run Multivariate Cox Regression
+get_cox_res(colon, endpoint, endpoint.code, multi.features,
+            test.type = "multicox")
+
+# Run Multivariate Cox Regression For Each rx Group
+get_cox_res(colon, endpoint, endpoint.code, multi.features, group,
+            test.type = "multicox")
 }
 

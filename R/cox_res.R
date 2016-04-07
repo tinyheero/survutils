@@ -1,8 +1,9 @@
 #' Run Cox Regression on a Single or Multiple Groups of Data
 #'
 #' \code{get_cox_res} is a wrapper around coxph. It can run
-#' univariate or multivariate cox regression. If the group parameter is used,
-#' then cox regression is run for each group separately. 
+#' univariate or multivariate cox regression based on the test.type parameter. 
+#' If the group parameter is used, then cox regression is run for each group 
+#' separately. 
 #'
 #' The data is returned in a broom::tidy data.frame format.
 #'
@@ -12,6 +13,8 @@
 #' @param features Vector containing the features to run cox regression on.
 #' @param group Column name containing the groups to run cox regression on. If,
 #'   specified, cox regression is run separately for each group.
+#' @param test.type Indicate whether to perform univariate or multivariate cox
+#'   regression.
 #' @return Cox regression results returned in a tidy data.frame format.
 #' @export
 #' @examples
@@ -19,21 +22,41 @@
 #' endpoint <- "time"
 #' endpoint.code <- "status"
 #'
-#' # Run Univariate Cox Regression on Entire data.frame
+#' # Run Univariate Cox Regression on Single Feature
 #' features <- "age"
-#' get_cox_res(colon, endpoint, endpoint.code, features)
+#' get_cox_res(colon, endpoint, endpoint.code, features, test.type = "unicox")
+#' 
+#' # Run Univariate Cox Regression on Multiple Features
+#' multi.features <- c("age", "obstruct")
+#' get_cox_res(colon, endpoint, endpoint.code, multi.features, 
+#'             test.type = "unicox")
 #'
-#' # Run Multivariate Cox Regression on Entire data.frame
-#' features <- c("age", "obstruct")
-#' get_cox_res(colon, endpoint, endpoint.code, features)
+#' # Run Univariate Cox Regression on Multiple Features For Each rx group
+#' group <- "rx"
+#' get_cox_res(colon, endpoint, endpoint.code, multi.features, group,
+#'             test.type = "unicox")
+#'
+#' # Run Multivariate Cox Regression 
+#' get_cox_res(colon, endpoint, endpoint.code, multi.features, 
+#'             test.type = "multicox")
 #'
 #' # Run Multivariate Cox Regression For Each rx Group
-#' group <- "rx"
-#' get_cox_res(colon, endpoint, endpoint.code, features, group)
+#' get_cox_res(colon, endpoint, endpoint.code, multi.features, group,
+#'             test.type = "multicox")
 get_cox_res <- function(in.df, endpoint, endpoint.code, features, group,
                         test.type = c("multicox", "unicox")) {
 
-	test.type <- match.arg(test.type)
+  test.type <- match.arg(test.type)
+
+  # Input Checking
+  if (is.null(features)) {
+    stop("No features specified")
+  } 
+
+  if (length(features) == 1 && test.type == "multicox") {
+    message("Detected only one feature. Running univariate cox regression")
+    test.type <- "unicox"
+  }
 
   # Checking if All Columns are Present
   input.col.names <- c(endpoint, endpoint.code, features)
@@ -48,53 +71,65 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group,
   # exponentiate = TRUE in broom is used to convert into hazard ratios
   resp.var <- paste0("survival::Surv(", endpoint, ", ", endpoint.code, ")")
 
-  # If running multivariate cox regression
+  # If Running Multivariate Cox Regression
   if (test.type == "multicox") {
     features.formula <- paste(features, collapse = "+")
     cox.formula <- as.formula(paste0(resp.var, "~", features.formula))
 
     if (missing(group)) {
-      # Run Cox Regression on Whole data.frame
-      survival::coxph(formula = cox.formula, data = in.df) %>%
-      broom::tidy(exponentiate = TRUE)
+      # Run Cox Regression 
+      cox.res.df <- 
+        survival::coxph(formula = cox.formula, data = in.df) %>%
+        broom::tidy(exponentiate = TRUE)
 
     } else {
-			# Run Cox Regression on "groups" in the data.frame
-			in.df %>%
-				dplyr::group_by_(.dots = group) %>%
-				dplyr::do(cox.res = survival::coxph(formula = cox.formula, data = .)) %>%
-				dplyr::rowwise() %>%
-				broom::tidy(cox.res, exponentiate = TRUE)
-		}
+      # Run Cox Regression on "groups"
+      cox.res.df <- 
+        in.df %>%
+        dplyr::group_by_(.dots = group) %>%
+        dplyr::do(cox.res = survival::coxph(formula = cox.formula, data = .)) %>%
+        dplyr::rowwise() %>%
+        broom::tidy(cox.res, exponentiate = TRUE)
+    }
 
-  # If running univariate cox regression
+  # Running Univariate Cox Regression
   } else if (test.type == "unicox") {
     in.melt.df <- tidyr::gather_(in.df, "variable", "value", features)
     cox.formula <- as.formula(paste0(resp.var, "~ value"))
 
     if (missing(group)) {
-      cox.res.df <- 
+      cox.res.df <-
         in.melt.df %>%
         split(.$variable) %>%
-        purrr::map(~ 
+        purrr::map(~
           survival::coxph(formula = cox.formula, data = .) %>%
           broom::tidy(exponentiate = TRUE) %>%
           dplyr::select_("-term")
         ) %>%
         dplyr::bind_rows(.id = "term")
-    } 
+
+    } else {
+      cox.res.df <-
+        in.melt.df %>%
+        dplyr::group_by_(.dots = c("variable", group)) %>%
+        dplyr::do(cox.res = survival::coxph(formula = cox.formula, data = .)) %>%
+        dplyr::rowwise() %>%
+        broom::tidy(cox.res, exponentiate = TRUE) %>%
+        dplyr::select_("-term") %>%
+        dplyr::rename_(.dots = setNames("variable", "term"))
+    }
   }
 
-	# Add test.type as column to output data.frame
-	mutate.call <- lazyeval::interp(~ a, a = as.name(test.type))
+  # Add test.type as column to output data.frame
+  mutate.call <- lazyeval::interp(~ a, a = test.type)
 
-	cox.res.df <- 
-		dplyr::mutate_(cox.res.df, .dots = setNames(list(mutate.call), "test_type"))
-	cox.res.df
+  cox.res.df <-
+    dplyr::mutate_(cox.res.df, .dots = setNames(list(mutate.call), "test_type"))
+  cox.res.df
 }
 
 #' Plot Cox Regression Results
-#' 
+#'
 #' \code{plot_cox_res} takes the output from \code{get_cox_res} and generates
 #' a forest plot showing the hazard ratio and confidence interval of the cox
 #' cox regression. 
