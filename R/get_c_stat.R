@@ -20,11 +20,6 @@
 #' get_c_stat(in.df, "time", "status", prog.factor, tau)
 get_c_stat <- function(in.df, endpoint, endpoint.code, prog.factor, tau.val) {
 
-  in.df.col.classes <- sapply(in.df, class)
-  if ("character" %in% in.df.col.classes) {
-    stop("One of the columns is a character type. All columns us be numeric.")
-  }
-
   message(paste0("Endpoint: ", endpoint))
   message(paste0("Endpoint code: ", endpoint.code))
   message(paste0("Prognostic Factor: ", paste(prog.factor, collapse = ", ")))
@@ -32,6 +27,13 @@ get_c_stat <- function(in.df, endpoint, endpoint.code, prog.factor, tau.val) {
   # Prepare input data.frame to be used with survC1::Inf.Cval
   col.select <- c(endpoint, endpoint.code, prog.factor)
   in.sub.df <- dplyr::select_(in.df, .dots = col.select)
+
+  in.sub.df.col.classes <- sapply(in.sub.df, class)
+  if ("character" %in% in.sub.df.col.classes) {
+    stop(paste0("One of the columns is a character type. ",
+                "All columns must be numeric."))
+  }
+
   in.sub.df <- survC1::CompCase(in.sub.df)
   in.sub.df <- data.frame(in.sub.df)
 
