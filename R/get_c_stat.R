@@ -20,6 +20,11 @@
 #' get_c_stat(in.df, "time", "status", prog.factor, tau)
 get_c_stat <- function(in.df, endpoint, endpoint.code, prog.factor, tau.val) {
 
+  in.df.col.classes <- sapply(in.df, class)
+  if ("character" %in% in.df.col.classes) {
+    stop("One of the columns is a character type. All columns us be numeric.")
+  }
+
   message(paste0("Endpoint: ", endpoint))
   message(paste0("Endpoint code: ", endpoint.code))
   message(paste0("Prognostic Factor: ", paste(prog.factor, collapse = ", ")))
