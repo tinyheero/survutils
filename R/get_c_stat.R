@@ -3,12 +3,12 @@
 #' Wrapper around the Inf.Cval function from the survC1 R package to calculate
 #' C-statistics.
 #'
-#' @param in.df data.frame containing all the input data
-#' @param endpoint Column name of endpoint
-#' @param endpoint.code Column name of endpoint code
-#' @param prog.factor Column name of the prognostic factor to test
-#' @param tau Tau to be used for C-statistics inference
-#' @return data.frame containing the c-statistic, 95% CI, and standard error
+#' @param in.df data.frame containing all the input data.
+#' @param endpoint Column name of endpoint.
+#' @param endpoint.code Column name of endpoint code.
+#' @param prog.factor Column name of the prognostic factor to test.
+#' @param tau Vector of tau values to be used for C-statistics inference. 
+#' @return data.frame containing the c-statistic, 95% CI, and standard error.
 #' @export
 #' @examples 
 #' # Example taken from survC1
@@ -37,9 +37,19 @@ get_c_stat <- function(in.df, endpoint, endpoint.code, prog.factor, tau.val) {
   in.sub.df <- survC1::CompCase(in.sub.df)
   in.sub.df <- data.frame(in.sub.df)
 
-  c.stat.res <- survC1::Inf.Cval(in.sub.df, tau.val, itr = nrow(in.sub.df))
-  data.frame(c_stat = c.stat.res$Dhat,
-             low95 = c.stat.res$low95,
-             upp95 = c.stat.res$upp95,
-             se = c.stat.res$se)
+  out.df <- data.frame(matrix(ncol = 5, nrow = length(tau.val),
+                              dimnames = list(NULL, c("tau", "c_stat", 
+                                                      "low95", "upp95", 
+                                                      "se"))))
+  out.df[["tau"]] <- tau.val
+
+  for (i in 1:nrow(out.df)) {
+    cur.tau <- out.df[i, "tau"]
+    c.stat.res <- survC1::Inf.Cval(in.sub.df, cur.tau, itr = nrow(in.sub.df))
+    out.df[i, "c_stat"] <- c.stat.res$Dhat
+    out.df[i, "low95"] <- c.stat.res$low95
+    out.df[i, "upp95"] <- c.stat.res$upp95
+    out.df[i, "se"] <- c.stat.res$se
+  }
+  out.df
 }
