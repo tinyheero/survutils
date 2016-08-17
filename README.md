@@ -9,6 +9,7 @@ An R package for Survival Analysis. This package mainly serves as a wrapper arou
 Cox Regression
 
 -   `get_cox_res`: Run univariate or multivariate cox regression.
+-   `iter_get_cox_res`: Wrapper over `get_cox_res` to allow to faciliate ease of multiple `get_cox_res` runs.
 -   `plot_cox_res`: Generates a forest plot of the univariate or multivariate cox regression results from `get_cox_res`.
 
 Kaplan Meier Estimates/Curves
@@ -126,7 +127,7 @@ Running Cox Regression Multiple Times
 
 One useful function is the `iter_get_cox_res` which allows you to easily run the `get_cox_res` function multiple times without needing to setup a for loop yourself. This is useful in situations where you might need to perform multiple pairwise multivariate Cox regression analysis to test the independence of a novel prognostic biomarker to existing biomarkers.
 
-The input to the `iter_get_cox_res` function is the same as `get_cox_res` with the only exception being the features parameter whcih takes a list of vectors. Each element in the list indicates the features you want to perform cox regression on:
+The input to the `iter_get_cox_res` function is the same as `get_cox_res` with the only exception being the features parameter which takes a list of vectors. Each element in the list indicates the features you want to perform Cox regression on:
 
 ``` r
 features <- list(c("age", "obstruct"),
