@@ -103,3 +103,34 @@ cox.res.df %>%
   mutate(sig_flag = p.value < 0.05) %>%
   plot_cox_res(cox.res.df, group = group, color.col = "sig_flag")
 ```
+
+# Running Cox Regression Multiple Times
+
+One useful function is the `iter_get_cox_res` which allows you to easily run the `get_cox_res` function multiple times without needing to setup a for loop yourself. This is useful in situations where you might need to perform multiple pairwise multivariate Cox regression analysis to test the independence of a novel prognostic biomarker to existing biomarkers.
+
+The input to the `iter_get_cox_res` function is the same as `get_cox_res` with the only exception being the features parameter whcih takes a list of vectors. Each element in the list indicates the features you want to perform cox regression on:
+
+```{r}
+features <- list(c("age", "obstruct"),
+                 c("age", "rx"))
+
+iter_get_cox_res.df.list <- 
+  iter_get_cox_res(colon, endpoint, endpoint.code, features)
+```
+
+The output is a list of data frames with each element being the output of a single `get_cox_res` run:
+
+```{r}
+iter_get_cox_res.df.list
+```
+
+We can merge these lists of data frames very easily:
+
+```{r}
+bind_rows(iter_get_cox_res.df.list, .id = "cox_res_ind") %>%
+  kable(caption = "Iterative Cox Regression Results")
+```
+
+```{r}
+devtools::session_info()
+```
