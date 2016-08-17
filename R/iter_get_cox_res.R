@@ -5,6 +5,8 @@
 #'
 #' @inheritParams get_cox_res
 #' @param features This must be a list of features.
+#' @return List of data frames with each data frame being the output of 
+#'   \code{get_cox_res}.
 #' @export
 #' @examples
 #' library("survival")

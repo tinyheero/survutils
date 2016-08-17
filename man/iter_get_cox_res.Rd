@@ -22,6 +22,10 @@ specified, cox regression is run separately for each group.}
 \item{test.type}{Indicate whether to perform univariate or multivariate cox
 regression.}
 }
+\value{
+List of data frames with each data frame being the output of 
+  \code{get_cox_res}.
+}
 \description{
 This is a modified version of \code{get_cox_res} allowing for multiple runs
 of get_cox_res.
