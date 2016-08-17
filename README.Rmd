@@ -128,8 +128,20 @@ iter_get_cox_res.df.list
 We can merge these lists of data frames very easily:
 
 ```{r}
-bind_rows(iter_get_cox_res.df.list, .id = "cox_res_ind") %>%
-  kable(caption = "Iterative Cox Regression Results")
+iter_get_cox_res.df <- 
+  bind_rows(iter_get_cox_res.df.list, .id = "cox_res_ind")
+
+kable(iter_get_cox_res.df, caption = "Iterative Cox Regression Results")
+```
+
+One could plot then the multiple Cox regression as follows:
+
+```{r}
+library("ggplot2")
+
+plot_cox_res(iter_get_cox_res.df) +
+  facet_grid(cox_res_ind ~ ., 
+             scales = "free_y")
 ```
 
 ```{r}

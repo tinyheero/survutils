@@ -163,8 +163,10 @@ iter_get_cox_res.df.list
 We can merge these lists of data frames very easily:
 
 ``` r
-bind_rows(iter_get_cox_res.df.list, .id = "cox_res_ind") %>%
-  kable(caption = "Iterative Cox Regression Results")
+iter_get_cox_res.df <- 
+  bind_rows(iter_get_cox_res.df.list, .id = "cox_res_ind")
+
+kable(iter_get_cox_res.df, caption = "Iterative Cox Regression Results")
 ```
 
 | cox\_res\_ind | term      |   estimate|  std.error|   statistic|    p.value|   conf.low|  conf.high| test\_type |
@@ -174,6 +176,18 @@ bind_rows(iter_get_cox_res.df.list, .id = "cox_res_ind") %>%
 | 2             | age       |  0.9979456|  0.0028067|  -0.7327116|  0.4637343|  0.9924709|  1.0034505| multicox   |
 | 2             | rxLev     |  0.9801495|  0.0768372|  -0.2609438|  0.7941359|  0.8431180|  1.1394526| multicox   |
 | 2             | rxLev+5FU |  0.6444376|  0.0839364|  -5.2346475|  0.0000002|  0.5466811|  0.7596746| multicox   |
+
+One could plot then the multiple Cox regression as follows:
+
+``` r
+library("ggplot2")
+
+plot_cox_res(iter_get_cox_res.df) +
+  facet_grid(cox_res_ind ~ ., 
+             scales = "free_y")
+```
+
+![](README-images/unnamed-chunk-9-1.png)
 
 ``` r
 devtools::session_info()
@@ -197,7 +211,7 @@ devtools::session_info()
 #>  dplyr      * 0.5.0      2016-06-24 CRAN (R 3.2.2)                      
 #>  evaluate     0.8        2015-09-18 CRAN (R 3.2.2)                      
 #>  formatR      1.2.1      2015-09-18 CRAN (R 3.2.2)                      
-#>  ggplot2      2.1.0      2016-03-01 CRAN (R 3.2.2)                      
+#>  ggplot2    * 2.1.0      2016-03-01 CRAN (R 3.2.2)                      
 #>  gtable       0.1.2      2012-12-05 CRAN (R 3.2.2)                      
 #>  highr        0.5.1      2015-09-18 CRAN (R 3.2.2)                      
 #>  htmltools    0.3.5      2016-03-21 CRAN (R 3.2.2)                      
