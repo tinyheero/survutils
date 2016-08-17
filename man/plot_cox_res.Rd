@@ -4,8 +4,8 @@
 \alias{plot_cox_res}
 \title{Plot Cox Regression Results}
 \usage{
-plot_cox_res(cox.res.df, group, x.lab, y.lab, y.col = "term", color.col,
-  color.legend.name, coord.flip = FALSE)
+plot_cox_res(cox.res.df, group = NULL, x.lab, y.lab, y.col = "term",
+  color.col, color.legend.name, coord.flip = FALSE)
 }
 \arguments{
 \item{group}{Vector containing the column name(s) of the grouping variables.

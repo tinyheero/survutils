@@ -4,7 +4,7 @@
 \alias{get_cox_res}
 \title{Run Cox Regression on a Single or Multiple Groups of Data}
 \usage{
-get_cox_res(in.df, endpoint, endpoint.code, features, group,
+get_cox_res(in.df, endpoint, endpoint.code, features, group = NULL,
   test.type = c("multicox", "unicox"))
 }
 \arguments{

@@ -43,7 +43,7 @@
 #' # Run Multivariate Cox Regression For Each rx Group
 #' get_cox_res(colon, endpoint, endpoint.code, multi.features, group,
 #'             test.type = "multicox")
-get_cox_res <- function(in.df, endpoint, endpoint.code, features, group,
+get_cox_res <- function(in.df, endpoint, endpoint.code, features, group = NULL,
                         test.type = c("multicox", "unicox")) {
 
   test.type <- match.arg(test.type)
@@ -76,7 +76,7 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group,
     features.formula <- paste(features, collapse = "+")
     cox.formula <- as.formula(paste0(resp.var, "~", features.formula))
 
-    if (missing(group)) {
+    if (is.null(group)) {
       # Run Cox Regression 
       cox.res.df <- 
         survival::coxph(formula = cox.formula, data = in.df) %>%
@@ -97,7 +97,7 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group,
     in.melt.df <- tidyr::gather_(in.df, "variable", "value", features)
     cox.formula <- as.formula(paste0(resp.var, "~ value"))
 
-    if (missing(group)) {
+    if (is.null(group)) {
       cox.res.df <-
         in.melt.df %>%
         split(.$variable) %>%
@@ -186,7 +186,7 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group,
 #'   plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature", 
 #'                color.col = "sig_flag", 
 #'                color.legend.name = "Significant Flag", coord.flip = TRUE)
-plot_cox_res <- function(cox.res.df, group, x.lab, y.lab, y.col = "term",
+plot_cox_res <- function(cox.res.df, group = NULL, x.lab, y.lab, y.col = "term",
                          color.col, color.legend.name, coord.flip = FALSE) {
 
   if (!coord.flip) {
@@ -215,7 +215,7 @@ plot_cox_res <- function(cox.res.df, group, x.lab, y.lab, y.col = "term",
     }
   }
     
-  if (!missing(group)) {
+  if (!is.null(group)) {
     p <- p + ggplot2::facet_grid(reformulate(group))
   }
 
