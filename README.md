@@ -1,3 +1,9 @@
+
+-   survutils
+-   How to Install
+-   Cox Regression
+-   Running Cox Regression Multiple Times
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 survutils
 =========
@@ -199,7 +205,7 @@ devtools::session_info()
 #>  language (EN)                        
 #>  collate  en_CA.UTF-8                 
 #>  tz       America/Vancouver           
-#>  date     2016-08-17
+#>  date     2016-08-20
 #> Packages ------------------------------------------------------------------
 #>  package    * version    date       source                              
 #>  assertthat   0.1        2013-12-06 CRAN (R 3.2.2)                      
@@ -224,7 +230,6 @@ devtools::session_info()
 #>  mnormt       1.5-3      2015-05-25 CRAN (R 3.2.2)                      
 #>  munsell      0.4.2      2013-07-11 CRAN (R 3.2.2)                      
 #>  nlme         3.1-122    2015-08-19 CRAN (R 3.2.1)                      
-#>  nvimcom    * 0.9-14     2016-08-17 local                               
 #>  plyr         1.8.3      2015-06-12 CRAN (R 3.2.2)                      
 #>  psych        1.5.8      2015-08-30 CRAN (R 3.2.2)                      
 #>  R6           2.1.1      2015-08-19 CRAN (R 3.2.2)                      

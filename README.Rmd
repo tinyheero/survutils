@@ -1,7 +1,8 @@
 ---
 output:
-  md_document:
-    variant: markdown_github
+  github_document:
+    toc: true
+    toc_depth: 2
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
