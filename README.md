@@ -3,6 +3,8 @@
 -   How to Install
 -   Cox Regression
 -   Running Cox Regression Multiple Times
+-   Kaplan Meier Estimates/Curves
+-   R Session
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 survutils
@@ -50,7 +52,7 @@ library("dplyr")
 
 head(colon) %>%
     select(age, obstruct, time, status, rx) %>%
-    kable
+    kable()
 ```
 
 |  age|  obstruct|  time|  status| rx      |
@@ -195,6 +197,87 @@ plot_cox_res(iter_get_cox_res.df) +
 
 ![](README-images/unnamed-chunk-9-1.png)
 
+Kaplan Meier Estimates/Curves
+=============================
+
+If you have generated a Kaplan-meier, there are several functions you can use to retrieve important statistics. For example, the `get_surv_prob` function is used for retrieving survival probability at certain times. Here is an example of how to generate survival probabilities for just the "Obs" arm at times 100, 200, and 300:
+
+``` r
+library("dplyr")
+library("survival")
+library("survutils")
+
+times <- c(100, 200, 300)
+
+colon %>%
+  filter(rx == "Obs") %>%
+  survfit(Surv(time, status) ~ 1, data = .) %>%
+  get_surv_prob(times)
+#> [1] 0.9730159 0.9174603 0.8476190
+```
+
+Here is a small trick you can employ to get the survival probability that for both arms simultaneously:
+
+``` r
+library("purrr")
+#> 
+#> Attaching package: 'purrr'
+#> The following objects are masked from 'package:dplyr':
+#> 
+#>     contains, order_by
+library("reshape2")
+
+surv.prob.res <- 
+  colon %>%
+  split(.$rx) %>%
+  map(~ survfit(Surv(time, status) ~ 1, data = .)) %>%
+  map(get_surv_prob, times)
+
+surv.prob.res.df <- as_data_frame(surv.prob.res)
+colnames(surv.prob.res.df) <- names(surv.prob.res)
+surv.prob.res.df <-
+  surv.prob.res.df %>%
+  mutate(surv_prob_time = times)
+
+surv.prob.res.df %>%
+  melt(id.vars = "surv_prob_time", value.name = "surv_prob",
+       variable.name = "group")
+#>   surv_prob_time   group surv_prob
+#> 1            100     Obs 0.9730159
+#> 2            200     Obs 0.9174603
+#> 3            300     Obs 0.8476190
+#> 4            100     Lev 0.9708942
+#> 5            200     Lev 0.9110224
+#> 6            300     Lev 0.8543053
+#> 7            100 Lev+5FU 0.9785720
+#> 8            200 Lev+5FU 0.9439177
+#> 9            300 Lev+5FU 0.9059629
+```
+
+You can also retrieve a number at risks table using the `get_nrisk_tbl` function. Here we will use it to get the number at risk at the timeslots 100, 200, and 300:
+
+``` r
+survfit(Surv(time, status) ~ rx, data = colon) %>%
+  get_nrisk_tbl(timeby = 100) %>%
+  filter(time %in% c(100, 200, 300)) %>%
+  kable()
+```
+
+| strata     |  time|  n.risk|
+|:-----------|-----:|-------:|
+| rx=Obs     |   100|     613|
+| rx=Obs     |   200|     578|
+| rx=Obs     |   300|     534|
+| rx=Lev     |   100|     601|
+| rx=Lev     |   200|     563|
+| rx=Lev     |   300|     528|
+| rx=Lev+5FU |   100|     593|
+| rx=Lev+5FU |   200|     572|
+| rx=Lev+5FU |   300|     549|
+
+R Session
+=========
+
 ``` r
 devtools::session_info()
 #> Session info --------------------------------------------------------------
@@ -204,21 +287,22 @@ devtools::session_info()
 #>  ui       unknown                     
 #>  language (EN)                        
 #>  collate  en_CA.UTF-8                 
-#>  tz       America/Vancouver           
-#>  date     2016-08-20
+#>  tz       Asia/Hong_Kong              
+#>  date     2017-01-06
 #> Packages ------------------------------------------------------------------
 #>  package    * version    date       source                              
 #>  assertthat   0.1        2013-12-06 CRAN (R 3.2.2)                      
-#>  broom        0.4.0      2015-11-30 CRAN (R 3.2.2)                      
-#>  colorspace   1.2-6      2015-03-11 CRAN (R 3.2.2)                      
-#>  DBI          0.5        2016-08-11 CRAN (R 3.2.2)                      
+#>  broom        0.4.1      2016-06-24 CRAN (R 3.2.2)                      
+#>  colorspace   1.3-2      2016-12-14 CRAN (R 3.2.2)                      
+#>  DBI          0.5-1      2016-09-10 CRAN (R 3.2.2)                      
 #>  devtools     1.9.1      2015-09-11 CRAN (R 3.2.2)                      
-#>  digest       0.6.9      2016-01-08 CRAN (R 3.2.2)                      
+#>  digest       0.6.11     2017-01-03 CRAN (R 3.2.2)                      
 #>  dplyr      * 0.5.0      2016-06-24 CRAN (R 3.2.2)                      
 #>  evaluate     0.8        2015-09-18 CRAN (R 3.2.2)                      
+#>  foreign      0.8-66     2015-08-19 CRAN (R 3.2.2)                      
 #>  formatR      1.2.1      2015-09-18 CRAN (R 3.2.2)                      
-#>  ggplot2    * 2.1.0      2016-03-01 CRAN (R 3.2.2)                      
-#>  gtable       0.1.2      2012-12-05 CRAN (R 3.2.2)                      
+#>  ggplot2    * 2.2.1      2016-12-30 CRAN (R 3.2.2)                      
+#>  gtable       0.2.0      2016-02-26 CRAN (R 3.2.2)                      
 #>  highr        0.5.1      2015-09-18 CRAN (R 3.2.2)                      
 #>  htmltools    0.3.5      2016-03-21 CRAN (R 3.2.2)                      
 #>  knitr      * 1.13       2016-05-09 CRAN (R 3.2.2)                      
@@ -227,21 +311,23 @@ devtools::session_info()
 #>  lazyeval     0.2.0      2016-06-12 CRAN (R 3.2.2)                      
 #>  magrittr     1.5        2014-11-22 CRAN (R 3.2.2)                      
 #>  memoise      0.2.1      2014-04-22 CRAN (R 3.2.2)                      
-#>  mnormt       1.5-3      2015-05-25 CRAN (R 3.2.2)                      
-#>  munsell      0.4.2      2013-07-11 CRAN (R 3.2.2)                      
+#>  mnormt       1.5-5      2016-10-15 CRAN (R 3.2.2)                      
+#>  munsell      0.4.3      2016-02-13 CRAN (R 3.2.2)                      
 #>  nlme         3.1-122    2015-08-19 CRAN (R 3.2.1)                      
-#>  plyr         1.8.3      2015-06-12 CRAN (R 3.2.2)                      
-#>  psych        1.5.8      2015-08-30 CRAN (R 3.2.2)                      
-#>  R6           2.1.1      2015-08-19 CRAN (R 3.2.2)                      
-#>  Rcpp         0.12.6     2016-07-19 CRAN (R 3.2.2)                      
-#>  reshape2     1.4.1      2014-12-06 CRAN (R 3.2.2)                      
+#>  nvimcom    * 0.9-14     2016-08-17 local                               
+#>  plyr         1.8.4      2016-06-08 CRAN (R 3.2.2)                      
+#>  psych        1.6.9      2016-09-17 CRAN (R 3.2.2)                      
+#>  purrr      * 0.2.2      2016-06-18 CRAN (R 3.2.2)                      
+#>  R6           2.2.0      2016-10-05 CRAN (R 3.2.2)                      
+#>  Rcpp         0.12.8     2016-11-17 CRAN (R 3.2.2)                      
+#>  reshape2   * 1.4.1      2014-12-06 CRAN (R 3.2.2)                      
 #>  rmarkdown    0.9.6      2016-05-01 CRAN (R 3.2.2)                      
-#>  scales       0.3.0      2015-08-25 CRAN (R 3.2.2)                      
-#>  stringi      1.0-1      2015-10-22 CRAN (R 3.2.2)                      
-#>  stringr      1.0.0      2015-04-30 CRAN (R 3.2.2)                      
+#>  scales       0.4.1      2016-11-09 CRAN (R 3.2.2)                      
+#>  stringi      1.1.2      2016-10-01 CRAN (R 3.2.2)                      
+#>  stringr      1.1.0      2016-08-19 CRAN (R 3.2.2)                      
 #>  survival   * 2.38-3     2015-07-02 CRAN (R 3.2.2)                      
-#>  survutils  * 0.0.0.9013 2016-08-17 Github (tinyheero/survutils@c0ea85e)
-#>  tibble       1.1        2016-07-04 CRAN (R 3.2.2)                      
-#>  tidyr        0.5.1      2016-06-14 CRAN (R 3.2.2)                      
+#>  survutils  * 0.0.0.9013 2017-01-05 Github (tinyheero/survutils@815f2f5)
+#>  tibble       1.2        2016-08-26 CRAN (R 3.2.2)                      
+#>  tidyr        0.6.0      2016-08-12 CRAN (R 3.2.2)                      
 #>  yaml         2.1.13     2014-06-12 CRAN (R 3.2.2)
 ```
