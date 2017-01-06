@@ -1,11 +1,4 @@
 
--   survutils
--   How to Install
--   Cox Regression
--   Running Cox Regression Multiple Times
--   Kaplan Meier Estimates/Curves
--   R Session
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 survutils
 =========
@@ -241,20 +234,23 @@ surv.prob.res.df <-
 
 surv.prob.res.df %>%
   melt(id.vars = "surv_prob_time", value.name = "surv_prob",
-       variable.name = "group")
-#>   surv_prob_time   group surv_prob
-#> 1            100     Obs 0.9730159
-#> 2            200     Obs 0.9174603
-#> 3            300     Obs 0.8476190
-#> 4            100     Lev 0.9708942
-#> 5            200     Lev 0.9110224
-#> 6            300     Lev 0.8543053
-#> 7            100 Lev+5FU 0.9785720
-#> 8            200 Lev+5FU 0.9439177
-#> 9            300 Lev+5FU 0.9059629
+       variable.name = "group") %>%
+  kable()
 ```
 
-You can also retrieve a number at risks table using the `get_nrisk_tbl` function. Here we will use it to get the number at risk at the timeslots 100, 200, and 300:
+|  surv\_prob\_time| group   |  surv\_prob|
+|-----------------:|:--------|-----------:|
+|               100| Obs     |   0.9730159|
+|               200| Obs     |   0.9174603|
+|               300| Obs     |   0.8476190|
+|               100| Lev     |   0.9708942|
+|               200| Lev     |   0.9110224|
+|               300| Lev     |   0.8543053|
+|               100| Lev+5FU |   0.9785720|
+|               200| Lev+5FU |   0.9439177|
+|               300| Lev+5FU |   0.9059629|
+
+You can also retrieve a number at risks table using the `get_nrisk_tbl` function. Here we will use it to get the number at risk at time 100, 200, and 300:
 
 ``` r
 survfit(Surv(time, status) ~ rx, data = colon) %>%
@@ -314,7 +310,6 @@ devtools::session_info()
 #>  mnormt       1.5-5      2016-10-15 CRAN (R 3.2.2)                      
 #>  munsell      0.4.3      2016-02-13 CRAN (R 3.2.2)                      
 #>  nlme         3.1-122    2015-08-19 CRAN (R 3.2.1)                      
-#>  nvimcom    * 0.9-14     2016-08-17 local                               
 #>  plyr         1.8.4      2016-06-08 CRAN (R 3.2.2)                      
 #>  psych        1.6.9      2016-09-17 CRAN (R 3.2.2)                      
 #>  purrr      * 0.2.2      2016-06-18 CRAN (R 3.2.2)                      

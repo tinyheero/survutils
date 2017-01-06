@@ -1,8 +1,6 @@
 ---
 output:
-  github_document:
-    toc: true
-    toc_depth: 2
+  github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -182,7 +180,8 @@ surv.prob.res.df <-
 
 surv.prob.res.df %>%
   melt(id.vars = "surv_prob_time", value.name = "surv_prob",
-       variable.name = "group")
+       variable.name = "group") %>%
+  kable()
 ```
 
 You can also retrieve a number at risks table using the `get_nrisk_tbl` function. Here we will use it to get the number at risk at time 100, 200, and 300:
