@@ -103,10 +103,14 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group = NULL,
         split(.$variable) %>%
         purrr::map(~
           survival::coxph(formula = cox.formula, data = .) %>%
-          broom::tidy(exponentiate = TRUE) %>%
-          dplyr::select_("-term")
+          broom::tidy(exponentiate = TRUE) 
         ) %>%
-        dplyr::bind_rows(.id = "term")
+        dplyr::bind_rows(.id = "feature")
+
+      mutate.call <- lazyeval::interp(~ gsub("^value", "", a), 
+                                      a = as.name("term"))
+      cox.res.df <- dplyr::mutate_(cox.res.df, 
+                                   .dots = setNames(list(mutate.call), "term"))
 
     } else {
       cox.res.df <-
