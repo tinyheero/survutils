@@ -25,7 +25,7 @@
 #' # Run Univariate Cox Regression on Single Feature
 #' features <- "age"
 #' get_cox_res(colon, endpoint, endpoint.code, features, test.type = "unicox")
-#' 
+#'
 #' # Run Univariate Cox Regression on Multiple Features
 #' multi.features <- c("age", "obstruct")
 #' get_cox_res(colon, endpoint, endpoint.code, multi.features, 
@@ -97,10 +97,40 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group = NULL,
     in.melt.df <- tidyr::gather_(in.df, "variable", "value", features)
     cox.formula <- as.formula(paste0(resp.var, "~ value"))
 
+    in.df.col.class <- sapply(in.df, class)
+
     if (is.null(group)) {
+      in.melt.split.df.list <- 
+        in.melt.df %>% 
+        split(.$variable)
+
+      # Ensure column types are maintained after tidyr::gather
+      # When running gather on multiple columns, the values are placed into 
+      # 1 column. Inconsistent column types will have values coerced into the 
+      # most common type (typically character). This set of code ensures that
+      # the column types are properly maintained.
+      for (feature in features) {
+        feature.class <- in.df.col.class[[feature]]
+        if (feature.class == "factor") {
+          mutate.call <- lazyeval::interp(~ factor(a),
+                                          a = as.name("value"))
+
+          in.melt.split.df.list[[feature]] <- 
+            dplyr::mutate_(in.melt.split.df.list[[feature]],
+                           .dots = setNames(list(mutate.call), "value"))
+
+        } else if (feature.class == "numeric") {
+          mutate.call <- lazyeval::interp(~ as.numeric(a),
+                                          a = as.name("value"))
+
+          in.melt.split.df.list[[feature]] <- 
+            dplyr::mutate_(in.melt.split.df.list[[feature]],
+                           .dots = setNames(list(mutate.call), "value"))
+        }
+      }
+
       cox.res.df <-
-        in.melt.df %>%
-        split(.$variable) %>%
+        in.melt.split.df.list %>%
         purrr::map(~
           survival::coxph(formula = cox.formula, data = .) %>%
           broom::tidy(exponentiate = TRUE) 
