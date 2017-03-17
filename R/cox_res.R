@@ -24,7 +24,7 @@
 #'
 #' # Run Univariate Cox Regression on Single Feature
 #' features <- "age"
-#' get_cox_res(colon, endpoint, endpoint.code, features, test.type = "unicox")
+#' test.df <- get_cox_res(colon, endpoint, endpoint.code, features)
 #'
 #' # Run Univariate Cox Regression on Multiple Features
 #' multi.features <- c("age", "obstruct")
@@ -33,8 +33,7 @@
 #'
 #' # Run Univariate Cox Regression on Multiple Features For Each rx group
 #' group <- "rx"
-#' get_cox_res(colon, endpoint, endpoint.code, multi.features, group,
-#'             test.type = "unicox")
+#' get_cox_res(colon, endpoint, endpoint.code, multi.features, group)
 #'
 #' # Run Multivariate Cox Regression 
 #' get_cox_res(colon, endpoint, endpoint.code, multi.features, 
@@ -43,19 +42,19 @@
 #' # Run Multivariate Cox Regression For Each rx Group
 #' get_cox_res(colon, endpoint, endpoint.code, multi.features, group,
 #'             test.type = "multicox")
-get_cox_res <- function(in.df, endpoint, endpoint.code, features, group = NULL,
-                        test.type = c("multicox", "unicox")) {
-
-  test.type <- match.arg(test.type)
+get_cox_res <- function(in.df, endpoint, endpoint.code, features, group = NULL) {
 
   # Input Checking
   if (is.null(features)) {
     stop("No features specified")
   } 
 
-  if (length(features) == 1 && test.type == "multicox") {
+  if (length(features) == 1) {
     message("Detected only one feature. Running univariate cox regression")
     test.type <- "unicox"
+  } else {
+    message("Detected multiple features. Running multivariate cox regression")
+    test.type <- "multicox"
   }
 
   # Checking if All Columns are Present
@@ -71,96 +70,37 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group = NULL,
   # exponentiate = TRUE in broom is used to convert into hazard ratios
   resp.var <- paste0("survival::Surv(", endpoint, ", ", endpoint.code, ")")
 
-  # If Running Multivariate Cox Regression
-  if (test.type == "multicox") {
-    features.formula <- paste(features, collapse = "+")
-    cox.formula <- as.formula(paste0(resp.var, "~", features.formula))
+  features.formula <- paste(features, collapse = "+")
+  cox.formula <- as.formula(paste0(resp.var, "~", features.formula))
 
-    if (is.null(group)) {
-      # Run Cox Regression 
-      cox.res.df <- 
-        survival::coxph(formula = cox.formula, data = in.df) %>%
+  if (is.null(group)) {
+    # Run Cox Regression 
+    cox.res.df <- 
+      survival::coxph(formula = cox.formula, data = in.df) %>%
+      broom::tidy(exponentiate = TRUE)
+
+  } else {
+    # Split into group and then run Cox regression
+    split.call <- lazyeval::interp(quote(list(.$a)),
+                                   a = group)
+
+    cox.res.df <- 
+      in.df %>%
+      split(f = eval(split.call)) %>%
+      purrr::map(~
+        survival::coxph(formula = cox.formula, data = .) %>%
         broom::tidy(exponentiate = TRUE)
-
-    } else {
-      # Run Cox Regression on "groups"
-      cox.res.df <- 
-        in.df %>%
-        dplyr::group_by_(.dots = group) %>%
-        dplyr::do(cox.res = survival::coxph(formula = cox.formula, data = .)) %>%
-        dplyr::rowwise() %>%
-        broom::tidy(cox.res, exponentiate = TRUE)
-    }
-
-  # Running Univariate Cox Regression
-  } else if (test.type == "unicox") {
-    in.melt.df <- tidyr::gather_(in.df, "variable", "value", features)
-    cox.formula <- as.formula(paste0(resp.var, "~ value"))
-
-    in.df.col.class <- sapply(in.df, class)
-
-    if (is.null(group)) {
-      in.melt.split.df.list <- 
-        in.melt.df %>% 
-        split(.$variable)
-
-      # Ensure column types are maintained after tidyr::gather
-      # When running gather on multiple columns, the values are placed into 
-      # 1 column. Inconsistent column types will have values coerced into the 
-      # most common type (typically character). This set of code ensures that
-      # the column types are properly maintained.
-      for (feature in features) {
-        feature.class <- in.df.col.class[[feature]]
-        if (feature.class == "factor") {
-          mutate.call <- lazyeval::interp(~ factor(a),
-                                          a = as.name("value"))
-
-          in.melt.split.df.list[[feature]] <- 
-            dplyr::mutate_(in.melt.split.df.list[[feature]],
-                           .dots = setNames(list(mutate.call), "value"))
-
-        } else if (feature.class == "numeric") {
-          mutate.call <- lazyeval::interp(~ as.numeric(a),
-                                          a = as.name("value"))
-
-          in.melt.split.df.list[[feature]] <- 
-            dplyr::mutate_(in.melt.split.df.list[[feature]],
-                           .dots = setNames(list(mutate.call), "value"))
-        }
-      }
-
-      cox.res.df <-
-        in.melt.split.df.list %>%
-        purrr::map(~
-          survival::coxph(formula = cox.formula, data = .) %>%
-          broom::tidy(exponentiate = TRUE) 
-        ) %>%
-        dplyr::bind_rows(.id = "feature")
-
-      mutate.call <- lazyeval::interp(~ gsub("^value", "", a), 
-                                      a = as.name("term"))
-      cox.res.df <- dplyr::mutate_(cox.res.df, 
-                                   .dots = setNames(list(mutate.call), "term"))
-
-    } else {
-      cox.res.df <-
-        in.melt.df %>%
-        dplyr::group_by_(.dots = c("variable", group)) %>%
-        dplyr::do(cox.res = survival::coxph(formula = cox.formula, data = .)) %>%
-        dplyr::rowwise() %>%
-        broom::tidy(cox.res, exponentiate = TRUE) %>%
-        dplyr::select_("-term") %>%
-        dplyr::rename_(.dots = setNames("variable", "term"))
-    }
+      ) %>%
+      dplyr::bind_rows(.id = "group")
   }
 
   # Add test.type as column to output data.frame
   mutate.call <- lazyeval::interp(~ a, a = test.type)
-
+  
   cox.res.df <-
     dplyr::mutate_(cox.res.df, .dots = setNames(list(mutate.call), "test_type"))
   cox.res.df
-}
+} 
 
 #' Plot Cox Regression Results
 #'
