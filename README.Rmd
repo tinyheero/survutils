@@ -22,7 +22,7 @@ An R package for Survival Analysis. This package mainly serves as a wrapper arou
 Cox Regression
 
 * `get_cox_res`: Run univariate or multivariate cox regression.
-* `iter_get_cox_res`: Wrapper over `get_cox_res` to allow to faciliate ease of multiple `get_cox_res` runs.
+* `iter_get_cox_res`: Wrapper over `get_cox_res` to allow to faciliate ease of multiple `get_cox_res` runs. Internally, this makes use of `purrr:map` to iterate over a list of features.
 * `plot_cox_res`: Generates a forest plot of the univariate or multivariate cox regression results from `get_cox_res`.
 
 Kaplan Meier Estimates/Curves
