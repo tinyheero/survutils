@@ -4,8 +4,7 @@
 \alias{iter_get_cox_res}
 \title{Runs get_cox_res Over a Range of Features}
 \usage{
-iter_get_cox_res(in.df, endpoint, endpoint.code, features, group = NULL,
-  test.type = c("multicox", "unicox"))
+iter_get_cox_res(in.df, endpoint, endpoint.code, features, group = NULL)
 }
 \arguments{
 \item{in.df}{Input data.frame.}
@@ -18,9 +17,6 @@ iter_get_cox_res(in.df, endpoint, endpoint.code, features, group = NULL,
 
 \item{group}{Column name containing the groups to run cox regression on. If,
 specified, cox regression is run separately for each group.}
-
-\item{test.type}{Indicate whether to perform univariate or multivariate cox
-regression.}
 }
 \value{
 List of data frames with each data frame being the output of 
@@ -35,11 +31,11 @@ library("survival")
 endpoint <- "time"
 endpoint.code <- "status"
 
-# Run Multivariate Cox Regression on List of Features
+# Run Cox Regression on List of Features
 features <- list(c("age", "obstruct"),
-                 c("age", "rx"))
+                 c("nodes"))
 
-iter_get_cox_res(colon, endpoint, endpoint.code, features, 
-                 test.type = "multicox")
+iter_get_cox_res(colon, endpoint, endpoint.code, features,
+                  group = "rx")
 }
 

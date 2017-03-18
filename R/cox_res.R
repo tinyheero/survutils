@@ -28,20 +28,17 @@
 #'
 #' # Run Univariate Cox Regression on Multiple Features
 #' multi.features <- c("age", "obstruct")
-#' get_cox_res(colon, endpoint, endpoint.code, multi.features, 
-#'             test.type = "unicox")
+#' get_cox_res(colon, endpoint, endpoint.code, multi.features)
 #'
 #' # Run Univariate Cox Regression on Multiple Features For Each rx group
 #' group <- "rx"
 #' get_cox_res(colon, endpoint, endpoint.code, multi.features, group)
 #'
 #' # Run Multivariate Cox Regression 
-#' get_cox_res(colon, endpoint, endpoint.code, multi.features, 
-#'             test.type = "multicox")
+#' get_cox_res(colon, endpoint, endpoint.code, multi.features)
 #'
 #' # Run Multivariate Cox Regression For Each rx Group
-#' get_cox_res(colon, endpoint, endpoint.code, multi.features, group,
-#'             test.type = "multicox")
+#' get_cox_res(colon, endpoint, endpoint.code, multi.features, group)
 get_cox_res <- function(in.df, endpoint, endpoint.code, features, group = NULL) {
 
   # Input Checking
@@ -109,10 +106,6 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group = NULL) 
 #' cox regression. 
 #' 
 #' @param data.frame output from \code{get_cox_res}.
-#' @param group Vector containing the column name(s) of the grouping variables.
-#'   This is only applicable if multivariate cox regression was run. 
-#'   The data will be faceted for each group. This currently only supports at
-#'   most two column names (i.e. two-dimensions).
 #' @param x.lab x-axis label.
 #' @param y.lab y-axis label.
 #' @param y.col Column name that contains the values for the y-values. 
@@ -123,6 +116,11 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group = NULL) 
 #'   TRUE, then this information is plotted along the x-axis using 
 #'   ggplot2::geom_errorbar(). This means that the x.lab and y.lab will be 
 #'   flipped to. 
+#' @param facet.formula Facet formula for facetting the plot. This should be
+#'   used plotting results from \code{iter_get_cox_res} or when the parameter 
+#'   group is used in \code{get_cox_res} and \code{iter_get_cox_res}.
+#' @param facet.scales Parameter passed to the scales parameter in 
+#'   \code{ggplot2::facet_grid}.
 #' @return Forest plot of cox regression results in the ggplot framework.
 #' @export
 #' @examples
@@ -142,26 +140,31 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group = NULL) 
 #' # Run and Plot Multivariate Cox Regression For Each rx Group
 #' group <- "rx"
 #' cox.res.df <- get_cox_res(colon, endpoint, endpoint.code, features, group)
-#' plot_cox_res(cox.res.df, group)
+#' plot_cox_res(cox.res.df, facet.formula = ". ~ group")
 #' 
 #' # Change x and y labels
-#' plot_cox_res(cox.res.df, group, x.lab = "Hazard Ratio", y.lab = "Feature")
+#' plot_cox_res(cox.res.df, facet.formula = ". ~ group", 
+#'              x.lab = "Hazard Ratio", y.lab = "Feature")
 #' 
 #' # Adding colors
 #' cox.res.df %>%
 #'   mutate(sig_flag = p.value < 0.05) %>%
-#'   plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature", 
+#'   plot_cox_res(facet.formula = ". ~ group", x.lab = "Hazard Ratio", 
+#'                y.lab = "Feature", 
 #'                color.col = "sig_flag", 
 #'                color.legend.name = "Significant Flag")
 #'
 #' # Flipping Plot
 #' cox.res.df %>%
 #'   mutate(sig_flag = p.value < 0.05) %>%
-#'   plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature", 
+#'   plot_cox_res(facet.formula = ". ~ group", x.lab = "Hazard Ratio", 
+#'                y.lab = "Feature", 
 #'                color.col = "sig_flag", 
-#'                color.legend.name = "Significant Flag", coord.flip = TRUE)
-plot_cox_res <- function(cox.res.df, group = NULL, x.lab, y.lab, y.col = "term",
-                         color.col, color.legend.name, coord.flip = FALSE) {
+#'                color.legend.name = "Significant Flag", 
+#'                coord.flip = TRUE)
+plot_cox_res <- function(cox.res.df, x.lab, y.lab, y.col = "term", color.col, 
+                         color.legend.name, coord.flip = FALSE,
+                         facet.formula = NULL, facet.scales = "fixed") {
 
   if (!coord.flip) {
     p <- cox.res.df %>%
@@ -188,9 +191,10 @@ plot_cox_res <- function(cox.res.df, group = NULL, x.lab, y.lab, y.col = "term",
       p <- p + ggplot2::scale_color_discrete(name = color.legend.name)
     }
   }
-    
-  if (!is.null(group)) {
-    p <- p + ggplot2::facet_grid(reformulate(group))
+
+  if (!is.null(facet.formula)) {
+    p <- p + ggplot2::facet_grid(facets = facet.formula,
+                                 scales = facet.scales)
   }
 
   if (!missing(x.lab)) {
@@ -203,5 +207,5 @@ plot_cox_res <- function(cox.res.df, group = NULL, x.lab, y.lab, y.col = "term",
     p <- p + ggplot2::ylab(y.lab)
   }
 
-    p
+  p
 }

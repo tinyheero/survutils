@@ -4,8 +4,7 @@
 \alias{get_cox_res}
 \title{Run Cox Regression on a Single or Multiple Groups of Data}
 \usage{
-get_cox_res(in.df, endpoint, endpoint.code, features, group = NULL,
-  test.type = c("multicox", "unicox"))
+get_cox_res(in.df, endpoint, endpoint.code, features, group = NULL)
 }
 \arguments{
 \item{in.df}{Input data.frame.}
@@ -41,24 +40,20 @@ endpoint.code <- "status"
 
 # Run Univariate Cox Regression on Single Feature
 features <- "age"
-get_cox_res(colon, endpoint, endpoint.code, features, test.type = "unicox")
+test.df <- get_cox_res(colon, endpoint, endpoint.code, features)
 
 # Run Univariate Cox Regression on Multiple Features
 multi.features <- c("age", "obstruct")
-get_cox_res(colon, endpoint, endpoint.code, multi.features, 
-            test.type = "unicox")
+get_cox_res(colon, endpoint, endpoint.code, multi.features)
 
 # Run Univariate Cox Regression on Multiple Features For Each rx group
 group <- "rx"
-get_cox_res(colon, endpoint, endpoint.code, multi.features, group,
-            test.type = "unicox")
+get_cox_res(colon, endpoint, endpoint.code, multi.features, group)
 
 # Run Multivariate Cox Regression 
-get_cox_res(colon, endpoint, endpoint.code, multi.features, 
-            test.type = "multicox")
+get_cox_res(colon, endpoint, endpoint.code, multi.features)
 
 # Run Multivariate Cox Regression For Each rx Group
-get_cox_res(colon, endpoint, endpoint.code, multi.features, group,
-            test.type = "multicox")
+get_cox_res(colon, endpoint, endpoint.code, multi.features, group)
 }
 

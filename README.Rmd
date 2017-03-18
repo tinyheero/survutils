@@ -90,18 +90,28 @@ cox.res.df <- get_cox_res(colon, endpoint, endpoint.code, features, group)
 kable(cox.res.df)
 ```
 
-Notice how the output data.frame now has cox regression results for each treatment group (i.e. Obs, Lev, Lev+5FU). We can also plot these results very easily:
+Notice how the output data.frame now has cox regression results for each treatment group (i.e. Obs, Lev, Lev+5FU). We can use the `plot_cox_res` function again and pass in a `facet.formula` to plot these results very easily:
 
 ```{r, get_cox_res_group_example}
-plot_cox_res(cox.res.df, group = group)
+plot_cox_res(cox.res.df,
+             facet.formula = ". ~ group")
 ```
 
-This will facet the groups so that we can visualize the cox regression results for each treatment group. There are also other options (see `?plot_cox_res` for full options) such as the ability to add colors:
+This will facet the groups (per column) so that we can visualize the cox regression results for each treatment group. The formula is the format for `ggplot2::facet_grid` with the full [documentation listed here](http://docs.ggplot2.org/current/facet_grid.html). In short, the left hand side of the formula indicates what you want to facet by row. The right hand side of the formula indicates what you want to facet by column. By specifically `. ~ group`, we are indicating we do not want to facet by row (this is indicated by the `.`) and we want to facet the `group` variable by column.
+
+We could have facetted by row too very easily:
+
+```{r, get_cox_res_group_example_facet_row}
+plot_cox_res(cox.res.df,
+             facet.formula = "group ~ .")
+```
+
+There are also other options (see `?plot_cox_res` for full options) such as the ability to add colors:
 
 ```{r, get_cox_res_group_colors_example, message = FALSE}
 cox.res.df %>%
   mutate(sig_flag = p.value < 0.05) %>%
-  plot_cox_res(cox.res.df, group = group, color.col = "sig_flag")
+  plot_cox_res(facet.formula = ". ~ group", color.col = "sig_flag")
 ```
 
 # Running Cox Regression Multiple Times
@@ -112,35 +122,40 @@ The input to the `iter_get_cox_res` function is the same as `get_cox_res` with t
 
 ```{r}
 features <- list(c("age", "obstruct"),
-                 c("age", "rx"))
+                 c("age"))
 
-iter_get_cox_res.df.list <- 
+iter_get_cox_res.df <- 
   iter_get_cox_res(colon, endpoint, endpoint.code, features)
 ```
 
-The output is a list of data frames with each element being the output of a single `get_cox_res` run:
+The output is a data frame with a `iter_num` column indicating a separate Cox regression result from `get_cox_res`:
 
 ```{r}
-iter_get_cox_res.df.list
-```
-
-We can merge these lists of data frames very easily:
-
-```{r}
-iter_get_cox_res.df <- 
-  bind_rows(iter_get_cox_res.df.list, .id = "cox_res_ind")
-
 kable(iter_get_cox_res.df, caption = "Iterative Cox Regression Results")
 ```
 
-One could plot then the multiple Cox regression as follows:
+One could plot then the multiple Cox regression with facet by row as follows:
+
+```{r iter-cox-res-example}
+plot_cox_res(iter_get_cox_res.df,
+             facet.formula = "iter_num ~ .", facet.scales = "free_y")
+```
+
+By default, all features will appear in each facet. The `facet.scales` parameter drops features on the y-axes that are not part of the specific Cox regression. 
+
+You can even combine this with the group parameter:
 
 ```{r}
-library("ggplot2")
+iter_get_cox_res.group.df <- 
+  iter_get_cox_res(colon, endpoint, endpoint.code, features,
+                   group = "rx")
 
-plot_cox_res(iter_get_cox_res.df) +
-  facet_grid(cox_res_ind ~ ., 
-             scales = "free_y")
+kable(iter_get_cox_res.group.df, caption = "Iterative Cox Regression Results with Groups")
+```
+
+```{r iter-cox-res-group-example}
+plot_cox_res(iter_get_cox_res.group.df,
+             facet.formula = "iter_num ~ group", facet.scales = "free_y")
 ```
 
 # Kaplan Meier Estimates/Curves

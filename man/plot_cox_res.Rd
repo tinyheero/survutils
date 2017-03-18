@@ -4,15 +4,11 @@
 \alias{plot_cox_res}
 \title{Plot Cox Regression Results}
 \usage{
-plot_cox_res(cox.res.df, group = NULL, x.lab, y.lab, y.col = "term",
-  color.col, color.legend.name, coord.flip = FALSE)
+plot_cox_res(cox.res.df, x.lab, y.lab, y.col = "term", color.col,
+  color.legend.name, coord.flip = FALSE, facet.formula = NULL,
+  facet.scales = "fixed")
 }
 \arguments{
-\item{group}{Vector containing the column name(s) of the grouping variables.
-This is only applicable if multivariate cox regression was run. 
-The data will be faceted for each group. This currently only supports at
-most two column names (i.e. two-dimensions).}
-
 \item{x.lab}{x-axis label.}
 
 \item{y.lab}{y-axis label.}
@@ -28,6 +24,13 @@ plotted on the y-axis using ggplot2::geom_errorbarh(). If this is set to
 TRUE, then this information is plotted along the x-axis using 
 ggplot2::geom_errorbar(). This means that the x.lab and y.lab will be 
 flipped to.}
+
+\item{facet.formula}{Facet formula for facetting the plot. This should be
+used plotting results from \code{iter_get_cox_res} or when the parameter 
+group is used in \code{get_cox_res} and \code{iter_get_cox_res}.}
+
+\item{facet.scales}{Parameter passed to the scales parameter in 
+\code{ggplot2::facet_grid}.}
 
 \item{data.frame}{output from \code{get_cox_res}.}
 }
@@ -56,23 +59,27 @@ plot_cox_res(cox.res.df)
 # Run and Plot Multivariate Cox Regression For Each rx Group
 group <- "rx"
 cox.res.df <- get_cox_res(colon, endpoint, endpoint.code, features, group)
-plot_cox_res(cox.res.df, group)
+plot_cox_res(cox.res.df, facet.formula = ". ~ group")
 
 # Change x and y labels
-plot_cox_res(cox.res.df, group, x.lab = "Hazard Ratio", y.lab = "Feature")
+plot_cox_res(cox.res.df, facet.formula = ". ~ group", 
+             x.lab = "Hazard Ratio", y.lab = "Feature")
 
 # Adding colors
 cox.res.df \%>\%
   mutate(sig_flag = p.value < 0.05) \%>\%
-  plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature", 
+  plot_cox_res(facet.formula = ". ~ group", x.lab = "Hazard Ratio", 
+               y.lab = "Feature", 
                color.col = "sig_flag", 
                color.legend.name = "Significant Flag")
 
 # Flipping Plot
 cox.res.df \%>\%
   mutate(sig_flag = p.value < 0.05) \%>\%
-  plot_cox_res(group = group, x.lab = "Hazard Ratio", y.lab = "Feature", 
+  plot_cox_res(facet.formula = ". ~ group", x.lab = "Hazard Ratio", 
+               y.lab = "Feature", 
                color.col = "sig_flag", 
-               color.legend.name = "Significant Flag", coord.flip = TRUE)
+               color.legend.name = "Significant Flag", 
+               coord.flip = TRUE)
 }
 
