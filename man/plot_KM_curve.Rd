@@ -6,7 +6,7 @@
 \usage{
 plot_km_curve(sfit, returns = FALSE, xlabs = "Time",
   ylabs = "survival probability", ystratalabs = NULL, ystrataname = NULL,
-  timeby = 100, main = "Kaplan-Meier Plot", pval = TRUE, ...)
+  timeby = 100, main = "Kaplan-Meier Plot", pval = TRUE)
 }
 \arguments{
 \item{sfit}{a \code{\link[survival]{survfit}} object}
@@ -26,8 +26,6 @@ plot_km_curve(sfit, returns = FALSE, xlabs = "Time",
 \item{main}{plot title}
 
 \item{pval}{logical: add the pvalue to the plot?}
-
-\item{pval}{logical: add the pvalue to the plot?}
 }
 \value{
 a ggplot is made. if returns=TRUE, then an ggplot object
@@ -44,7 +42,7 @@ not work when the input survival object contains only one group.
 }
 \examples{
 fit <- survival::survfit(survival::Surv(time,status) ~ rx, data = survival::colon)
-plot_KM_curve(fit, timeby = 500)
+plot_km_curve(fit, timeby = 500)
 }
 \author{
 Abhijit Dasgupta \url{https://gist.github.com/araastat/9927677}

@@ -19,7 +19,7 @@
 #' # Get Survival Probabilities for Each rx Group
 #' library("purrr")
 #' library("dplyr")
-#' library("reshape2")
+#' library("tidyr")
 #'
 #' surv.prob.res <- 
 #'   colon %>%
@@ -33,9 +33,7 @@
 #'   surv.prob.res.df %>%
 #'   mutate(surv_prob_time = times)
 #' 
-#' surv.prob.res.df %>%
-#'   melt(id.vars = "surv_prob_time", value.name = "surv_prob",
-#'        variable.name = "group")
+#' gather(surv.prob.res.df, "group", "surv_prob", Obs:`Lev+5FU`)
 get_surv_prob <- function(fit, times) {
   stepfun(fit$time, c(1, fit$surv))(times)
 }

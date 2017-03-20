@@ -102,7 +102,7 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group = NULL) 
 #' a forest plot showing the hazard ratio and confidence interval of the cox
 #' cox regression. 
 #' 
-#' @param data.frame output from \code{get_cox_res}.
+#' @param cox.res.df data.frame output from \code{get_cox_res}.
 #' @param x.lab x-axis label.
 #' @param y.lab y-axis label.
 #' @param y.col Column name that contains the values for the y-values. 

@@ -16,18 +16,17 @@
 #' @param timeby numeric: control the granularity along the time-axis
 #' @param main plot title
 #' @param pval logical: add the pvalue to the plot?
-#' @param pval logical: add the pvalue to the plot?
 #' @return a ggplot is made. if returns=TRUE, then an ggplot object
 #'   is returned
 #' @author Abhijit Dasgupta \url{https://gist.github.com/araastat/9927677}
 #' @export
 #' @examples
 #' fit <- survival::survfit(survival::Surv(time,status) ~ rx, data = survival::colon)
-#' plot_KM_curve(fit, timeby = 500)
+#' plot_km_curve(fit, timeby = 500)
 plot_km_curve <- function(sfit, returns = FALSE, xlabs = "Time", 
                  ylabs = "survival probability", ystratalabs = NULL, 
                  ystrataname = NULL, timeby = 100, main = "Kaplan-Meier Plot", 
-                 pval = TRUE, ...) {
+                 pval = TRUE) {
 
   .Deprecated("autoplot", "ggfortify", 
               paste("This function duplicates what ggfortify::autoplot does.",

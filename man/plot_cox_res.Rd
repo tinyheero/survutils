@@ -9,6 +9,8 @@ plot_cox_res(cox.res.df, x.lab, y.lab, y.col = "term", color.col,
   facet.scales = "fixed")
 }
 \arguments{
+\item{cox.res.df}{data.frame output from \code{get_cox_res}.}
+
 \item{x.lab}{x-axis label.}
 
 \item{y.lab}{y-axis label.}
@@ -31,8 +33,6 @@ group is used in \code{get_cox_res} and \code{iter_get_cox_res}.}
 
 \item{facet.scales}{Parameter passed to the scales parameter in 
 \code{ggplot2::facet_grid}.}
-
-\item{data.frame}{output from \code{get_cox_res}.}
 }
 \value{
 Forest plot of cox regression results in the ggplot framework.
