@@ -24,7 +24,7 @@
 #' @examples
 #' fit <- survival::survfit(survival::Surv(time,status) ~ rx, data = survival::colon)
 #' plot_KM_curve(fit, timeby = 500)
-plot_KM_curve <- function(sfit, returns = FALSE, xlabs = "Time", 
+plot_km_curve <- function(sfit, returns = FALSE, xlabs = "Time", 
                  ylabs = "survival probability", ystratalabs = NULL, 
                  ystrataname = NULL, timeby = 100, main = "Kaplan-Meier Plot", 
                  pval = TRUE, ...) {
