@@ -18,7 +18,8 @@ Imports:
     purrr (>= 0.1.0),
     magrittr (>= 1.5),
     broom (>= 0.3.7),
-    tidyr (>= 0.4.1)
+    tidyr (>= 0.4.1),
+    lazyeval (>= 0.2.0)
 URL: https://github.com/tinyheero/survutils
 BugReports: https://github.com/tinyheero/survutils/issues
 RoxygenNote: 5.0.1
