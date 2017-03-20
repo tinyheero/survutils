@@ -17,18 +17,14 @@ get_cox_res(in.df, endpoint, endpoint.code, features, group = NULL)
 
 \item{group}{Column name containing the groups to run cox regression on. If,
 specified, cox regression is run separately for each group.}
-
-\item{test.type}{Indicate whether to perform univariate or multivariate cox
-regression.}
 }
 \value{
 Cox regression results returned in a tidy data.frame format.
 }
 \description{
 \code{get_cox_res} is a wrapper around coxph. It can run
-univariate or multivariate cox regression based on the test.type parameter. 
-If the group parameter is used, then cox regression is run for each group 
-separately.
+univariate or multivariate cox regression. If the group parameter is used, 
+then cox regression is run for each group separately.
 }
 \details{
 The data is returned in a broom::tidy data.frame format.

@@ -4,7 +4,7 @@
 #' from a survival curve object from the survival::survfit function. The
 #' survival curve object can only have one group.
 #'
-#' @param survival::survfit object.
+#' @param fit survival::survfit object.
 #' @param times Vector of times to lookup survival probabilities.
 #' @export
 #' @return Vector of survival probabilities based on the input times.

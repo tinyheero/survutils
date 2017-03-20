@@ -1,9 +1,8 @@
 #' Run Cox Regression on a Single or Multiple Groups of Data
 #'
 #' \code{get_cox_res} is a wrapper around coxph. It can run
-#' univariate or multivariate cox regression based on the test.type parameter. 
-#' If the group parameter is used, then cox regression is run for each group 
-#' separately. 
+#' univariate or multivariate cox regression. If the group parameter is used, 
+#' then cox regression is run for each group separately. 
 #'
 #' The data is returned in a broom::tidy data.frame format.
 #'
@@ -13,8 +12,6 @@
 #' @param features Vector containing the features to run cox regression on.
 #' @param group Column name containing the groups to run cox regression on. If,
 #'   specified, cox regression is run separately for each group.
-#' @param test.type Indicate whether to perform univariate or multivariate cox
-#'   regression.
 #' @return Cox regression results returned in a tidy data.frame format.
 #' @export
 #' @examples

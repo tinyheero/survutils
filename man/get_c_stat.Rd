@@ -15,7 +15,7 @@ get_c_stat(in.df, endpoint, endpoint.code, prog.factor, tau.val)
 
 \item{prog.factor}{Column name of the prognostic factor to test.}
 
-\item{tau}{Vector of tau values to be used for C-statistics inference.}
+\item{tau.val}{Vector of tau values to be used for C-statistics inference.}
 }
 \value{
 data.frame containing the c-statistic, 95% CI, and standard error.

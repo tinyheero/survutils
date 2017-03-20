@@ -23,6 +23,7 @@ Results of survdiff or a log rank p-value if return.p is set to
 return the direct results or the log rank p-value only if specified.
 }
 \examples{
+library("survival")
  
 # Get survdiff results
 fit <- survfit(Surv(time, status) ~ rx, data = colon)

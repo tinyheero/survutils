@@ -7,9 +7,9 @@
 get_surv_prob(fit, times)
 }
 \arguments{
-\item{times}{Vector of times to lookup survival probabilities.}
+\item{fit}{survival::survfit object.}
 
-\item{survival::survfit}{object.}
+\item{times}{Vector of times to lookup survival probabilities.}
 }
 \value{
 Vector of survival probabilities based on the input times.

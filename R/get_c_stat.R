@@ -7,7 +7,7 @@
 #' @param endpoint Column name of endpoint.
 #' @param endpoint.code Column name of endpoint code.
 #' @param prog.factor Column name of the prognostic factor to test.
-#' @param tau Vector of tau values to be used for C-statistics inference. 
+#' @param tau.val Vector of tau values to be used for C-statistics inference. 
 #' @return data.frame containing the c-statistic, 95% CI, and standard error.
 #' @export
 #' @examples 

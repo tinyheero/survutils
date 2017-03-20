@@ -11,6 +11,7 @@
 #'   TRUE.
 #' @export
 #' @examples
+#' library("survival")
 #'  
 #' # Get survdiff results
 #' fit <- survfit(Surv(time, status) ~ rx, data = colon)
