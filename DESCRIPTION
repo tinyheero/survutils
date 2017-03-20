@@ -8,6 +8,7 @@ LazyData: true
 Depends:
     R (>= 3.1.2)
 Imports:
+		stats,
     plyr (>= 1.8.1),
     dplyr (>= 0.4.3),
     survC1 (>= 1.0.2),
