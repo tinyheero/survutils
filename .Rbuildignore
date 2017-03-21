@@ -3,3 +3,4 @@ README-images
 README.Rmd
 README.html
 ^\.travis\.yml$
+cran-comments.md
