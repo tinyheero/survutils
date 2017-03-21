@@ -1,5 +1,4 @@
 Makefile
-README-images
 README.Rmd
 README.html
 ^\.travis\.yml$

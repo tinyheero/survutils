@@ -87,7 +87,7 @@ This runs a multivariate cox regression on the entire set of data. We can plot t
 plot_cox_res(cox.res.df)
 ```
 
-![](README-images/get_cox_res_example-1.png)
+![](man/figures/get_cox_res_example-1.png)
 
 This gives us a forest plot with the hazard ratio and confidence evidence for each feature. If we are interested in running cox regression within each treatment group, we can make use of the `group` parameter.
 
@@ -114,7 +114,7 @@ plot_cox_res(cox.res.df,
              facet.formula = ". ~ group")
 ```
 
-![](README-images/get_cox_res_group_example-1.png)
+![](man/figures/get_cox_res_group_example-1.png)
 
 This will facet the groups (per column) so that we can visualize the cox regression results for each treatment group. The formula is the format for `ggplot2::facet_grid` with the full [documentation listed here](http://docs.ggplot2.org/current/facet_grid.html). In short, the left hand side of the formula indicates what you want to facet by row. The right hand side of the formula indicates what you want to facet by column. By specifically `. ~ group`, we are indicating we do not want to facet by row (this is indicated by the `.`) and we want to facet the `group` variable by column.
 
@@ -125,7 +125,7 @@ plot_cox_res(cox.res.df,
              facet.formula = "group ~ .")
 ```
 
-![](README-images/get_cox_res_group_example_facet_row-1.png)
+![](man/figures/get_cox_res_group_example_facet_row-1.png)
 
 There are also other options (see `?plot_cox_res` for full options) such as the ability to add colors:
 
@@ -135,7 +135,7 @@ cox.res.df %>%
   plot_cox_res(facet.formula = ". ~ group", color.col = "sig_flag")
 ```
 
-![](README-images/get_cox_res_group_colors_example-1.png)
+![](man/figures/get_cox_res_group_colors_example-1.png)
 
 Running Cox Regression Multiple Times
 =====================================
@@ -173,7 +173,7 @@ plot_cox_res(iter_get_cox_res.df,
              facet.formula = "iter_num ~ .", facet.scales = "free_y")
 ```
 
-![](README-images/iter-cox-res-example-1.png)
+![](man/figures/iter-cox-res-example-1.png)
 
 By default, all features will appear in each facet. The `facet.scales` parameter drops features on the y-axes that are not part of the specific Cox regression.
 
@@ -206,7 +206,7 @@ plot_cox_res(iter_get_cox_res.group.df,
              facet.formula = "iter_num ~ group", facet.scales = "free_y")
 ```
 
-![](README-images/iter-cox-res-group-example-1.png)
+![](man/figures/iter-cox-res-group-example-1.png)
 
 Kaplan Meier Estimates/Curves
 =============================
