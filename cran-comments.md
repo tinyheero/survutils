@@ -6,7 +6,7 @@
 
 ## R CMD check results
 
-There were no ERRORs, WARNINGs, or NOTEs.
+There were no ERRORs, or WARNINGs. There is 1 note from checking CRAN incoming feasibility reminding who is the maintainer (me).
 
 ## Downstream dependencies
 
