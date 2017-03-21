@@ -3,7 +3,7 @@
 survutils
 =========
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/survutils)](http://cran.r-project.org/package=survutils) [![Travis-CI Build Status](https://travis-ci.org/tinyheero/survutils.svg?branch=master)](https://travis-ci.org/tinyheero/survutils)
+[![Travis-CI Build Status](https://travis-ci.org/tinyheero/survutils.svg?branch=master)](https://travis-ci.org/tinyheero/survutils)
 
 An R package for Survival Analysis. This package mainly serves as a wrapper around various survival analysis functions (e.g. `coxph`, `survdiff`) to provide a more inituitive interface and output in [tidy data frames](http://vita.had.co.nz/papers/tidy-data.pdf). It has the following features (grouped by major topics):
 
