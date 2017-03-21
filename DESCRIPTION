@@ -1,19 +1,17 @@
 Package: survutils
 Title: Utility Functions for Survival Analysis
-Version: 0.0.0.9014
+Version: 1.0.9
 Authors@R: person("Fong Chun", "Chan", , "fongchunchan@gmail.com", role = c("aut", "cre"))
-Description: This package contains functions to work with survival analysis.
+Description: This package contains utility functions to work with survival analysis.
 License: MIT + file LICENSE
 LazyData: true
 Depends:
     R (>= 3.1.2)
 Imports:
 		stats,
-    plyr (>= 1.8.1),
     dplyr (>= 0.4.3),
     survC1 (>= 1.0.2),
     survival (>= 2.38.3),
-    grid (>= 3.1.2),
     ggplot2 (>= 1.0.0),
     purrr (>= 0.1.0),
     magrittr (>= 1.5),
