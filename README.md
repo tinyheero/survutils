@@ -5,7 +5,7 @@ survutils
 
 [![Travis-CI Build Status](https://travis-ci.org/tinyheero/survutils.svg?branch=master)](https://travis-ci.org/tinyheero/survutils)
 
-An R package for Survival Analysis. This package mainly serves as a wrapper around various survival analysis functions (e.g. `coxph`, `survdiff`) to provide a more inituitive interface and output in [tidy data frames](http://vita.had.co.nz/papers/tidy-data.pdf). It has the following features (grouped by major topics):
+This package uses functional programming principles to iteratively run and plot Cox regression. The results are reported in [tidy data frames](http://vita.had.co.nz/papers/tidy-data.pdf) data frames. Additional utility functions are available for working with other aspects of survival analysis such as survival curves, C-statistics, etc. It has the following features (grouped by major topics):
 
 Cox Regression
 
@@ -302,7 +302,7 @@ devtools::session_info()
 #>  language (EN)                        
 #>  collate  en_CA.UTF-8                 
 #>  tz       America/Vancouver           
-#>  date     2017-03-21
+#>  date     2017-03-22
 #> Packages ------------------------------------------------------------------
 #>  package    * version    date       source                        
 #>  assertthat   0.1        2013-12-06 CRAN (R 3.3.2)                
