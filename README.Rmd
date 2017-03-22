@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 [![Travis-CI Build Status](https://travis-ci.org/tinyheero/survutils.svg?branch=master)](https://travis-ci.org/tinyheero/survutils)
 
-This package uses functional programming principles to iteratively run and plot Cox regression. The results are reported in [tidy data frames](http://vita.had.co.nz/papers/tidy-data.pdf) data frames. Additional utility functions are available for working with other aspects of survival analysis such as survival curves, C-statistics, etc. It has the following features (grouped by major topics):
+This package uses [functional programming principles](http://adv-r.had.co.nz/Functional-programming.html) to iteratively run Cox regression and plot its results. The results are reported in [tidy data frames](http://vita.had.co.nz/papers/tidy-data.pdf) Additional utility functions are available for working with other aspects of survival analysis such as survival curves, C-statistics, etc. It has the following features (grouped by major topics):
 
 Cox Regression
 
