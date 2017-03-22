@@ -2,10 +2,11 @@ Package: survutils
 Title: Utility Functions for Survival Analysis
 Version: 1.0.0
 Authors@R: person("Fong Chun", "Chan", , "fongchunchan@gmail.com", role = c("aut", "cre"))
-Description: A package that uses functional programming principles to iteratively
-    run and plot Cox regression. The results are reported in tidy data frames. 
-    Additional utility functions are available for working with other aspects 
-    of survival analysis such as survival curves, C-statistics, etc.
+Description: Functional programming principles to iteratively run Cox 
+    regression and plot its results. The results are reported in tidy data 
+    frames. Additional utility functions are available for working with 
+    other aspects of survival analysis such as survival curves, C-statistics, 
+    etc.
 License: MIT + file LICENSE
 LazyData: true
 Depends:
