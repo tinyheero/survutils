@@ -3,7 +3,7 @@
 survutils
 =========
 
-[![Travis-CI Build Status](https://travis-ci.org/tinyheero/survutils.svg?branch=master)](https://travis-ci.org/tinyheero/survutils)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/survutils)](https://cran.r-project.org/package=survutils) [![Travis-CI Build Status](https://travis-ci.org/tinyheero/survutils.svg?branch=master)](https://travis-ci.org/tinyheero/survutils)
 
 This package uses [functional programming principles](http://adv-r.had.co.nz/Functional-programming.html) to iteratively run Cox regression and plot its results. The results are reported in [tidy data frames](http://vita.had.co.nz/papers/tidy-data.pdf). Additional utility functions are available for working with other aspects of survival analysis such as survival curves, C-statistics, etc. It has the following features (grouped by major topics):
 
@@ -26,7 +26,19 @@ Other
 How to Install
 ==============
 
-To install this package using devtools:
+To get the released version from CRAN:
+
+``` r
+install.packages("survtils")
+```
+
+You can also get cofeatureR through conda:
+
+``` bash
+conda install -c fongchun r-survutils
+```
+
+To install the latest developmental version from github:
 
 ``` r
 devtools::install_github("tinyheero/survutils")
@@ -304,46 +316,46 @@ devtools::session_info()
 #>  tz       America/Vancouver           
 #>  date     2017-03-22
 #> Packages ------------------------------------------------------------------
-#>  package    * version    date       source                        
-#>  assertthat   0.1        2013-12-06 CRAN (R 3.3.2)                
-#>  backports    1.0.4      2016-10-24 CRAN (R 3.3.2)                
-#>  broom        0.4.1      2016-06-24 CRAN (R 3.3.2)                
-#>  colorspace   1.3-1      2016-11-18 CRAN (R 3.3.2)                
-#>  DBI          0.5-1      2016-09-10 CRAN (R 3.3.2)                
-#>  devtools     1.12.0     2016-12-05 CRAN (R 3.3.2)                
-#>  digest       0.6.10     2016-08-02 CRAN (R 3.3.2)                
-#>  dplyr      * 0.5.0      2016-06-24 CRAN (R 3.3.2)                
-#>  evaluate     0.10       2016-10-11 CRAN (R 3.3.2)                
-#>  foreign      0.8-67     2016-09-13 CRAN (R 3.3.2)                
-#>  ggplot2      2.2.0      2016-11-11 CRAN (R 3.3.2)                
-#>  gtable       0.2.0      2016-02-26 CRAN (R 3.3.2)                
-#>  highr        0.6        2016-05-09 CRAN (R 3.3.2)                
-#>  htmltools    0.3.5      2016-03-21 CRAN (R 3.3.2)                
-#>  knitr      * 1.15.1     2016-11-22 CRAN (R 3.3.2)                
-#>  labeling     0.3        2014-08-23 CRAN (R 3.3.2)                
-#>  lattice      0.20-34    2016-09-06 CRAN (R 3.3.2)                
-#>  lazyeval     0.2.0      2016-06-12 CRAN (R 3.3.2)                
-#>  magrittr     1.5        2014-11-22 CRAN (R 3.3.2)                
-#>  Matrix       1.2-7.1    2016-09-01 CRAN (R 3.3.2)                
-#>  memoise      1.0.0      2016-01-29 CRAN (R 3.3.2)                
-#>  mnormt       1.5-5      2016-10-15 CRAN (R 3.3.2)                
-#>  munsell      0.4.3      2016-02-13 CRAN (R 3.3.2)                
-#>  nlme         3.1-128    2016-05-10 CRAN (R 3.3.2)                
-#>  plyr         1.8.4      2016-06-08 CRAN (R 3.3.2)                
-#>  psych        1.6.9      2016-09-17 CRAN (R 3.3.2)                
-#>  purrr      * 0.2.2      2016-06-18 CRAN (R 3.3.2)                
-#>  R6           2.2.0      2016-10-05 CRAN (R 3.3.2)                
-#>  Rcpp         0.12.8     2016-11-17 CRAN (R 3.3.2)                
-#>  reshape2   * 1.4.2      2016-10-22 CRAN (R 3.3.2)                
-#>  rmarkdown    1.3        2016-12-21 CRAN (R 3.3.2)                
-#>  rprojroot    1.1        2016-10-29 CRAN (R 3.3.2)                
-#>  scales       0.4.1      2016-11-09 CRAN (R 3.3.2)                
-#>  stringi      1.1.2      2016-10-01 CRAN (R 3.3.2)                
-#>  stringr      1.1.0      2016-08-19 CRAN (R 3.3.2)                
-#>  survival   * 2.40-1     2016-10-30 CRAN (R 3.3.2)                
-#>  survutils  * 0.0.0.9013 2017-03-18 local (tinyheero/survutils@NA)
-#>  tibble       1.2        2016-08-26 CRAN (R 3.3.2)                
-#>  tidyr        0.6.0      2016-08-12 CRAN (R 3.3.2)                
-#>  withr        1.0.2      2016-06-20 CRAN (R 3.3.2)                
-#>  yaml         2.1.14     2016-11-12 CRAN (R 3.3.2)
+#>  package    * version date       source        
+#>  assertthat   0.1     2013-12-06 CRAN (R 3.3.2)
+#>  backports    1.0.4   2016-10-24 CRAN (R 3.3.2)
+#>  broom        0.4.1   2016-06-24 CRAN (R 3.3.2)
+#>  colorspace   1.3-1   2016-11-18 CRAN (R 3.3.2)
+#>  DBI          0.5-1   2016-09-10 CRAN (R 3.3.2)
+#>  devtools     1.12.0  2016-12-05 CRAN (R 3.3.2)
+#>  digest       0.6.10  2016-08-02 CRAN (R 3.3.2)
+#>  dplyr      * 0.5.0   2016-06-24 CRAN (R 3.3.2)
+#>  evaluate     0.10    2016-10-11 CRAN (R 3.3.2)
+#>  foreign      0.8-67  2016-09-13 CRAN (R 3.3.2)
+#>  ggplot2      2.2.0   2016-11-11 CRAN (R 3.3.2)
+#>  gtable       0.2.0   2016-02-26 CRAN (R 3.3.2)
+#>  highr        0.6     2016-05-09 CRAN (R 3.3.2)
+#>  htmltools    0.3.5   2016-03-21 CRAN (R 3.3.2)
+#>  knitr      * 1.15.1  2016-11-22 CRAN (R 3.3.2)
+#>  labeling     0.3     2014-08-23 CRAN (R 3.3.2)
+#>  lattice      0.20-34 2016-09-06 CRAN (R 3.3.2)
+#>  lazyeval     0.2.0   2016-06-12 CRAN (R 3.3.2)
+#>  magrittr     1.5     2014-11-22 CRAN (R 3.3.2)
+#>  Matrix       1.2-7.1 2016-09-01 CRAN (R 3.3.2)
+#>  memoise      1.0.0   2016-01-29 CRAN (R 3.3.2)
+#>  mnormt       1.5-5   2016-10-15 CRAN (R 3.3.2)
+#>  munsell      0.4.3   2016-02-13 CRAN (R 3.3.2)
+#>  nlme         3.1-128 2016-05-10 CRAN (R 3.3.2)
+#>  plyr         1.8.4   2016-06-08 CRAN (R 3.3.2)
+#>  psych        1.6.9   2016-09-17 CRAN (R 3.3.2)
+#>  purrr      * 0.2.2   2016-06-18 CRAN (R 3.3.2)
+#>  R6           2.2.0   2016-10-05 CRAN (R 3.3.2)
+#>  Rcpp         0.12.8  2016-11-17 CRAN (R 3.3.2)
+#>  reshape2   * 1.4.2   2016-10-22 CRAN (R 3.3.2)
+#>  rmarkdown    1.3     2016-12-21 CRAN (R 3.3.2)
+#>  rprojroot    1.1     2016-10-29 CRAN (R 3.3.2)
+#>  scales       0.4.1   2016-11-09 CRAN (R 3.3.2)
+#>  stringi      1.1.2   2016-10-01 CRAN (R 3.3.2)
+#>  stringr      1.1.0   2016-08-19 CRAN (R 3.3.2)
+#>  survival   * 2.40-1  2016-10-30 CRAN (R 3.3.2)
+#>  survutils  * 1.0.0   2017-03-22 CRAN (R 3.3.2)
+#>  tibble       1.2     2016-08-26 CRAN (R 3.3.2)
+#>  tidyr        0.6.0   2016-08-12 CRAN (R 3.3.2)
+#>  withr        1.0.2   2016-06-20 CRAN (R 3.3.2)
+#>  yaml         2.1.14  2016-11-12 CRAN (R 3.3.2)
 ```
