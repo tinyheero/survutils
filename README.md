@@ -29,7 +29,7 @@ How to Install
 To get the released version from CRAN:
 
 ``` r
-install.packages("survtils")
+install.packages("survutils")
 ```
 
 You can also get cofeatureR through conda:
@@ -313,8 +313,8 @@ devtools::session_info()
 #>  ui       unknown                     
 #>  language (EN)                        
 #>  collate  en_CA.UTF-8                 
-#>  tz       America/Vancouver           
-#>  date     2017-03-22
+#>  tz       Europe/London               
+#>  date     2017-04-27
 #> Packages ------------------------------------------------------------------
 #>  package    * version date       source        
 #>  assertthat   0.1     2013-12-06 CRAN (R 3.3.2)
@@ -341,6 +341,7 @@ devtools::session_info()
 #>  mnormt       1.5-5   2016-10-15 CRAN (R 3.3.2)
 #>  munsell      0.4.3   2016-02-13 CRAN (R 3.3.2)
 #>  nlme         3.1-128 2016-05-10 CRAN (R 3.3.2)
+#>  nvimcom    * 0.9-14  2016-08-17 local         
 #>  plyr         1.8.4   2016-06-08 CRAN (R 3.3.2)
 #>  psych        1.6.9   2016-09-17 CRAN (R 3.3.2)
 #>  purrr      * 0.2.2   2016-06-18 CRAN (R 3.3.2)

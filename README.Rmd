@@ -41,7 +41,7 @@ Other
 To get the released version from CRAN:
 
 ```{r, eval = FALSE}
-install.packages("survtils")
+install.packages("survutils")
 ```
 
 You can also get cofeatureR through conda:
