@@ -10,6 +10,7 @@
 #' @param endpoint Column name of the endpoint.
 #' @param endpoint.code Column name of the endpoint status code.
 #' @param features Vector containing the features to run cox regression on.
+#' @param broom.fun Which broom function to run on the cox regression results.
 #' @param group Column name containing the groups to run cox regression on. If,
 #'   specified, cox regression is run separately for each group.
 #' @return Cox regression results returned in a tidy data.frame format.
@@ -36,7 +37,8 @@
 #'
 #' # Run Multivariate Cox Regression For Each rx Group
 #' get_cox_res(colon, endpoint, endpoint.code, multi.features, group)
-get_cox_res <- function(in.df, endpoint, endpoint.code, features, group = NULL) {
+get_cox_res <- function(in.df, endpoint, endpoint.code, features, 
+                        broom.fun = c("tidy", "glance"), group = NULL) {
 
   # Input Checking
   if (is.null(features)) {
@@ -50,6 +52,8 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group = NULL) 
     message("Detected multiple features. Running multivariate cox regression")
     test.type <- "multicox"
   }
+
+  broom.fun <- match.arg(broom.fun)
 
   # Checking if All Columns are Present
   input.col.names <- c(endpoint, endpoint.code, features)
@@ -69,23 +73,40 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features, group = NULL) 
 
   if (is.null(group)) {
     # Run Cox Regression 
-    cox.res.df <- 
-      survival::coxph(formula = cox.formula, data = in.df) %>%
-      broom::tidy(exponentiate = TRUE)
+    if (broom.fun == "tidy") {
+      cox.res.df <- 
+        survival::coxph(formula = cox.formula, data = in.df) %>%
+        broom::tidy(exponentiate = TRUE)
+    } else if (broom.fun == "glance") {
+      cox.res.df <- 
+        survival::coxph(formula = cox.formula, data = in.df) %>%
+        broom::glance()
+    }
 
   } else {
     # Split into group and then run Cox regression
     split.call <- lazyeval::interp(quote(list(.$a)),
                                    a = group)
 
-    cox.res.df <- 
-      in.df %>%
-      split(f = eval(split.call)) %>%
-      purrr::map(~
-        survival::coxph(formula = cox.formula, data = .) %>%
-        broom::tidy(exponentiate = TRUE)
-      ) %>%
-      dplyr::bind_rows(.id = "group")
+    cox.res.df <- in.df %>%
+      split(f = eval(split.call)) 
+
+    if (broom.fun == "tidy") {
+      cox.res.df <- 
+        cox.res.df %>%
+        purrr::map(~
+          survival::coxph(formula = cox.formula, data = .) %>%
+          broom::tidy(exponentiate = TRUE)
+        ) 
+    } else if (broom.fun == "glance") {
+      cox.res.df <- 
+        cox.res.df %>%
+        purrr::map(~
+          survival::coxph(formula = cox.formula, data = .) %>%
+          broom::glance()
+        ) 
+    }
+    cox.res.df <- dplyr::bind_rows(cox.res.df, .id = "group")
   }
 
   # Add test.type as column to output data.frame

@@ -20,7 +20,7 @@
 #' iter_get_cox_res(colon, endpoint, endpoint.code, features,
 #'                   group = "rx")
 iter_get_cox_res <- function(in.df, endpoint, endpoint.code, features, 
-                             group = NULL) {
+                             broom.fun = c("tidy", "glance"), group = NULL) {
 
   if (!is.list(features)) {
     stop("features must be a list")
@@ -33,6 +33,7 @@ iter_get_cox_res <- function(in.df, endpoint, endpoint.code, features,
                   endpoint = endpoint,
                   endpoint.code = endpoint.code,
                   features = x,
+                  broom.fun = broom.fun,
                   group = group)
     }
   ) %>%
