@@ -17,6 +17,10 @@ knitr::opts_chunk$set(
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/survutils)](https://cran.r-project.org/package=survutils)
 [![Travis-CI Build Status](https://travis-ci.org/tinyheero/survutils.svg?branch=master)](https://travis-ci.org/tinyheero/survutils)
+[![Downloads per month](http://cranlogs.r-pkg.org/badges/survutils)](https://cran.rstudio.com/web/packages/survutils)
+[![Total downloads](https://cranlogs.r-pkg.org/badges/grand-total/survutils)](https://cran.rstudio.com/web/packages/survutils)
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/tinyheero)
+
 
 This package uses [functional programming principles](http://adv-r.had.co.nz/Functional-programming.html) to iteratively run Cox regression and plot its results. The results are reported in [tidy data frames](http://vita.had.co.nz/papers/tidy-data.pdf). Additional utility functions are available for working with other aspects of survival analysis such as survival curves, C-statistics, etc. It has the following features (grouped by major topics):
 

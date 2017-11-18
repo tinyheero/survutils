@@ -3,7 +3,7 @@
 survutils
 =========
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/survutils)](https://cran.r-project.org/package=survutils) [![Travis-CI Build Status](https://travis-ci.org/tinyheero/survutils.svg?branch=master)](https://travis-ci.org/tinyheero/survutils)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/survutils)](https://cran.r-project.org/package=survutils) [![Travis-CI Build Status](https://travis-ci.org/tinyheero/survutils.svg?branch=master)](https://travis-ci.org/tinyheero/survutils) [![Downloads per month](http://cranlogs.r-pkg.org/badges/survutils)](https://cran.rstudio.com/web/packages/survutils) [![Total downloads](https://cranlogs.r-pkg.org/badges/grand-total/survutils)](https://cran.rstudio.com/web/packages/survutils) [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/tinyheero)
 
 This package uses [functional programming principles](http://adv-r.had.co.nz/Functional-programming.html) to iteratively run Cox regression and plot its results. The results are reported in [tidy data frames](http://vita.had.co.nz/papers/tidy-data.pdf). Additional utility functions are available for working with other aspects of survival analysis such as survival curves, C-statistics, etc. It has the following features (grouped by major topics):
 
@@ -314,7 +314,7 @@ devtools::session_info()
 #>  language (EN)                        
 #>  collate  en_CA.UTF-8                 
 #>  tz       Europe/London               
-#>  date     2017-04-27
+#>  date     2017-11-18
 #> Packages ------------------------------------------------------------------
 #>  package    * version date       source        
 #>  assertthat   0.1     2013-12-06 CRAN (R 3.3.2)
@@ -341,7 +341,6 @@ devtools::session_info()
 #>  mnormt       1.5-5   2016-10-15 CRAN (R 3.3.2)
 #>  munsell      0.4.3   2016-02-13 CRAN (R 3.3.2)
 #>  nlme         3.1-128 2016-05-10 CRAN (R 3.3.2)
-#>  nvimcom    * 0.9-14  2016-08-17 local         
 #>  plyr         1.8.4   2016-06-08 CRAN (R 3.3.2)
 #>  psych        1.6.9   2016-09-17 CRAN (R 3.3.2)
 #>  purrr      * 0.2.2   2016-06-18 CRAN (R 3.3.2)
