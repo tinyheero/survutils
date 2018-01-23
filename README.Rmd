@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 [![Travis-CI Build Status](https://travis-ci.org/tinyheero/survutils.svg?branch=master)](https://travis-ci.org/tinyheero/survutils)
 [![Downloads per month](http://cranlogs.r-pkg.org/badges/survutils)](https://cran.rstudio.com/web/packages/survutils)
 [![Total downloads](https://cranlogs.r-pkg.org/badges/grand-total/survutils)](https://cran.rstudio.com/web/packages/survutils)
+[![Anaconda-Server Badge](https://anaconda.org/fongchun/r-survutils/badges/version.svg)](https://anaconda.org/fongchun/r-survutils)
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/tinyheero)
 
 
