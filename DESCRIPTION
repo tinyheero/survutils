@@ -7,7 +7,7 @@ Description: Functional programming principles to iteratively run Cox
     frames. Additional utility functions are available for working with 
     other aspects of survival analysis such as survival curves, C-statistics, 
     etc.
-License: MIT + file LICENSE
+License: GPL-3
 LazyData: true
 Depends:
     R (>= 3.1.2)
