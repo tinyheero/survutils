@@ -22,7 +22,8 @@ Imports:
     broom (>= 0.3.7),
     lazyeval (>= 0.2.0)
 Suggests:
-    tidyr (>= 0.4.1)
+    tidyr (>= 0.4.1),
+    testthat
 URL: https://github.com/tinyheero/survutils
 BugReports: https://github.com/tinyheero/survutils/issues
 RoxygenNote: 5.0.1
