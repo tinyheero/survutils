@@ -64,6 +64,17 @@ get_cox_res <- function(in.df, endpoint, endpoint.code, features,
                 paste(missing.col.names, collapse = ", ")))
   }
 
+  # Check that endpoint and endpoint.code were not accidentally swapped
+  endpoint_code_factors <- levels(factor(in.df[[endpoint.code]]))
+  if (length(endpoint_code_factors) > 2) {
+    stop(
+      glue::glue(
+        "Error: More than two factor levels in your endpoint.code. 
+        Did you swap your endpoint and endpoint.code columns?"
+      )
+    )
+  }
+
   # Running Cox Regression
   # exponentiate = TRUE in broom is used to convert into hazard ratios
   resp.var <- paste0("survival::Surv(", endpoint, ", ", endpoint.code, ")")

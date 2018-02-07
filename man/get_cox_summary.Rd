@@ -22,4 +22,3 @@ results in a data.frame. It will calculate the confidence interval.
 cox.res <- survival::coxph(survival::Surv(time,status) ~ rx, survival::colon)
 get_cox_summary(cox.res)
 }
-

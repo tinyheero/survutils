@@ -4,7 +4,8 @@
 \alias{get_cox_res}
 \title{Run Cox Regression on a Single or Multiple Groups of Data}
 \usage{
-get_cox_res(in.df, endpoint, endpoint.code, features, group = NULL)
+get_cox_res(in.df, endpoint, endpoint.code, features, broom.fun = c("tidy",
+  "glance"), group = NULL)
 }
 \arguments{
 \item{in.df}{Input data.frame.}
@@ -14,6 +15,8 @@ get_cox_res(in.df, endpoint, endpoint.code, features, group = NULL)
 \item{endpoint.code}{Column name of the endpoint status code.}
 
 \item{features}{Vector containing the features to run cox regression on.}
+
+\item{broom.fun}{Which broom function to run on the cox regression results.}
 
 \item{group}{Column name containing the groups to run cox regression on. If,
 specified, cox regression is run separately for each group.}
@@ -52,4 +55,3 @@ get_cox_res(colon, endpoint, endpoint.code, multi.features)
 # Run Multivariate Cox Regression For Each rx Group
 get_cox_res(colon, endpoint, endpoint.code, multi.features, group)
 }
-

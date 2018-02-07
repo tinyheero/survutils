@@ -20,10 +20,11 @@ Imports:
     purrr (>= 0.1.0),
     magrittr (>= 1.5),
     broom (>= 0.3.7),
-    lazyeval (>= 0.2.0)
+    lazyeval (>= 0.2.0),
+    glue
 Suggests:
     tidyr (>= 0.4.1),
     testthat
 URL: https://github.com/tinyheero/survutils
 BugReports: https://github.com/tinyheero/survutils/issues
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

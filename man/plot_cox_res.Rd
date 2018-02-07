@@ -82,4 +82,3 @@ cox.res.df \%>\%
                color.legend.name = "Significant Flag", 
                coord.flip = TRUE)
 }
-

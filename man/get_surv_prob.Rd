@@ -46,4 +46,3 @@ surv.prob.res.df <-
 
 gather(surv.prob.res.df, "group", "surv_prob", Obs:`Lev+5FU`)
 }
-

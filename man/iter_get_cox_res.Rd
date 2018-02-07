@@ -4,7 +4,8 @@
 \alias{iter_get_cox_res}
 \title{Runs get_cox_res Over a Range of Features}
 \usage{
-iter_get_cox_res(in.df, endpoint, endpoint.code, features, group = NULL)
+iter_get_cox_res(in.df, endpoint, endpoint.code, features,
+  broom.fun = c("tidy", "glance"), group = NULL)
 }
 \arguments{
 \item{in.df}{Input data.frame.}
@@ -14,6 +15,8 @@ iter_get_cox_res(in.df, endpoint, endpoint.code, features, group = NULL)
 \item{endpoint.code}{Column name of the endpoint status code.}
 
 \item{features}{This must be a list of features.}
+
+\item{broom.fun}{Which broom function to run on the cox regression results.}
 
 \item{group}{Column name containing the groups to run cox regression on. If,
 specified, cox regression is run separately for each group.}
@@ -38,4 +41,3 @@ features <- list(c("age", "obstruct"),
 iter_get_cox_res(colon, endpoint, endpoint.code, features,
                   group = "rx")
 }
-

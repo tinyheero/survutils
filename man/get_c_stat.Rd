@@ -33,4 +33,3 @@ tau <- 365.25*8
 prog.factor <- c("trt", "edema", "bili", "chol", "albumin", "copper")
 get_c_stat(in.df, "time", "status", prog.factor, tau)
 }
-

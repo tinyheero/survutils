@@ -1,9 +1,21 @@
 context("Cox regression")
 
-test_that(
-  "get_cox_res correctly runs univariate Cox regression on a single feature", {
-
+test_that("get_cox_res correctly checks inputs", {
   library("survival")
+
+  # Test the swapping of endpoint and endpoint code variables
+  expect_error(
+    get_cox_res(
+      colon, 
+      endpoint = "status", endpoint.code = "time", 
+      features = "age"
+    )
+  )
+})
+
+test_that("get_cox_res runs univariate Cox regression on a single feature", {
+  library("survival")
+
   endpoint <- "time"
   endpoint.code <- "status"
   features <- "age"

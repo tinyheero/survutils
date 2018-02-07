@@ -8,4 +8,3 @@
 \description{
 survutils: A package for analyzing survival data
 }
-

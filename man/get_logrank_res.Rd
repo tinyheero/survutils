@@ -32,4 +32,3 @@ get_logrank_res(formula(fit), colon)
 # Get only log-rank p-value
 get_logrank_res(formula(fit), colon, return.p = TRUE)
 }
-

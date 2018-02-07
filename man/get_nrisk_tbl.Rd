@@ -25,4 +25,3 @@ get_nrisk_tbl(fit, timeby = 500)
 \author{
 Abhijit Dasgupta \url{https://gist.github.com/araastat/9927677}.
 }
-
