@@ -11,6 +11,12 @@ test_that("get_cox_res correctly checks inputs", {
       features = "age"
     )
   )
+
+  # Pass in erronous `broom.fun` option via positional arguments
+  expect_error(
+    get_cox_res(colon, "time", "status", "age", "rx", "non_broom.fun_opt")
+  )
+
 })
 
 test_that("get_cox_res runs univariate Cox regression on a single feature", {

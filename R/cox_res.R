@@ -37,8 +37,13 @@
 #'
 #' # Run Multivariate Cox Regression For Each rx Group
 #' get_cox_res(colon, endpoint, endpoint.code, multi.features, group)
-get_cox_res <- function(in.df, endpoint, endpoint.code, features, 
-                        broom.fun = c("tidy", "glance"), group = NULL) {
+get_cox_res <- function(
+  in.df, 
+  endpoint, endpoint.code, 
+  features, 
+  group = NULL,
+  broom.fun = c("tidy", "glance")
+) {
 
   # Input Checking
   if (is.null(features)) {
