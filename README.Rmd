@@ -1,5 +1,5 @@
 ---
-output:
+output: 
   github_document
 ---
 
@@ -28,7 +28,7 @@ This package uses [functional programming principles](http://adv-r.had.co.nz/Fun
 Cox Regression
 
 * `get_cox_res`: Run univariate or multivariate cox regression.
-* `iter_get_cox_res`: Wrapper over `get_cox_res` to allow to faciliate ease of multiple `get_cox_res` runs. Internally, this makes use of `purrr:map` to iterate over a list of features.
+* `iter_get_cox_res`: Wrapper over `get_cox_res` to faciliate ease of multiple `get_cox_res` runs. Internally, this makes use of `purrr:map` to iterate over a list of features.
 * `plot_cox_res`: Generates a forest plot of the univariate or multivariate cox regression results from `get_cox_res`.
 
 Kaplan Meier Estimates/Curves
@@ -49,7 +49,7 @@ To get the released version from CRAN:
 install.packages("survutils")
 ```
 
-You can also get cofeatureR through conda:
+You can also get survutils through conda:
 
 ```{bash, eval = FALSE}
 conda install -c fongchun r-survutils
