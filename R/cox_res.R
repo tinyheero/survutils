@@ -155,6 +155,9 @@ get_cox_res <- function(
 #'   group is used in \code{get_cox_res} and \code{iter_get_cox_res}.
 #' @param facet.scales Parameter passed to the scales parameter in 
 #'   \code{ggplot2::facet_grid}.
+#' @param add_sig_line Boolean to indicate if a red, dotted, vertical line 
+#'   should be added to allow users to see if a Cox regression confidence 
+#'   interval overlaps with 1.
 #' @return Forest plot of cox regression results in the ggplot framework.
 #' @export
 #' @examples
@@ -196,9 +199,14 @@ get_cox_res <- function(
 #'                color.col = "sig_flag", 
 #'                color.legend.name = "Significant Flag", 
 #'                coord.flip = TRUE)
-plot_cox_res <- function(cox.res.df, x.lab, y.lab, y.col = "term", color.col, 
-                         color.legend.name, coord.flip = FALSE,
-                         facet.formula = NULL, facet.scales = "fixed") {
+plot_cox_res <- function(
+  cox.res.df, 
+  x.lab, y.lab, y.col = "term", 
+  color.col, color.legend.name, 
+  coord.flip = FALSE, 
+  facet.formula = NULL, facet.scales = "fixed", 
+  add_sig_line = TRUE
+) {
 
   if (!coord.flip) {
     p <- cox.res.df %>%
@@ -216,6 +224,8 @@ plot_cox_res <- function(cox.res.df, x.lab, y.lab, y.col = "term", color.col,
       ggplot2::geom_errorbar(width = 0.1) +
       ggplot2::geom_point()
   }
+
+  p <- add_sig_line_to_plot(p, coord.flip, add_sig_line)
 
   if (!missing(color.col)) {
     p <- p + ggplot2::aes_string(color = color.col)
@@ -242,4 +252,38 @@ plot_cox_res <- function(cox.res.df, x.lab, y.lab, y.col = "term", color.col,
   }
 
   p
+}
+
+#' Add a Cox regression statistical significance line 
+#'
+#' This function will add a Cox regression statistical significance line to the
+#' input ggplot2.
+#' 
+#' @param cur_plot ggplot2 object to add on to.
+#' @param coord_flip Boolean to indicate if the ggplot2 has been flipped or not.
+#' @param add_sig_line Boolean to indicate whether the significance line should
+#'   be added or not.
+add_sig_line_to_plot <- function(cur_plot, coord_flip, add_sig_line) {
+
+  if (!add_sig_line) {
+    return(cur_plot)
+  }
+
+  message("Adding significance line")
+
+  if (!coord_flip) {
+    cur_plot <- 
+      cur_plot + 
+      ggplot2::geom_vline(
+        xintercept = 1, linetype = "dotted", color = "red"
+      )
+  } else {
+    cur_plot <- 
+      cur_plot + 
+      ggplot2::geom_hline(
+        yintercept = 1, linetype = "dotted", color = "red"
+      )
+  }
+
+  cur_plot
 }

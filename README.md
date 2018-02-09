@@ -124,6 +124,7 @@ can plot the results using `plot_cox_res`:
 
 ``` r
 plot_cox_res(cox.res.df)
+#> Adding significance line
 ```
 
 ![](man/figures/get_cox_res_example-1.png)<!-- -->
@@ -157,6 +158,7 @@ easily:
 ``` r
 plot_cox_res(cox.res.df,
              facet.formula = ". ~ group")
+#> Adding significance line
 ```
 
 ![](man/figures/get_cox_res_group_example-1.png)<!-- -->
@@ -176,6 +178,7 @@ We could have facetted by row too very easily:
 ``` r
 plot_cox_res(cox.res.df,
              facet.formula = "group ~ .")
+#> Adding significance line
 ```
 
 ![](man/figures/get_cox_res_group_example_facet_row-1.png)<!-- -->
@@ -234,6 +237,7 @@ follows:
 ``` r
 plot_cox_res(iter_get_cox_res.df,
              facet.formula = "iter_num ~ .", facet.scales = "free_y")
+#> Adding significance line
 ```
 
 ![](man/figures/iter-cox-res-example-1.png)<!-- -->
@@ -269,6 +273,7 @@ kable(iter_get_cox_res.group.df, caption = "Iterative Cox Regression Results wit
 ``` r
 plot_cox_res(iter_get_cox_res.group.df,
              facet.formula = "iter_num ~ group", facet.scales = "free_y")
+#> Adding significance line
 ```
 
 ![](man/figures/iter-cox-res-group-example-1.png)<!-- -->
@@ -369,63 +374,63 @@ devtools::session_info()
 #>  language (EN)                        
 #>  collate  en_CA.UTF-8                 
 #>  tz       Europe/London               
-#>  date     2018-02-07
+#>  date     2018-02-08
 #> Packages -----------------------------------------------------------------
-#>  package    * version    date       source                        
-#>  assertthat   0.2.0      2017-04-11 cran (@0.2.0)                 
-#>  base       * 3.3.2      2017-04-27 local                         
-#>  bindr        0.1        2016-11-13 cran (@0.1)                   
-#>  bindrcpp   * 0.2        2017-06-17 cran (@0.2)                   
-#>  broom        0.4.3      2017-11-20 cran (@0.4.3)                 
-#>  colorspace   1.3-2      2016-12-14 cran (@1.3-2)                 
-#>  datasets   * 3.3.2      2017-04-27 local                         
-#>  devtools     1.13.2     2017-06-02 CRAN (R 3.3.2)                
-#>  digest       0.6.15     2018-01-28 cran (@0.6.15)                
-#>  dplyr      * 0.7.4      2017-09-28 cran (@0.7.4)                 
-#>  evaluate     0.10.1     2017-06-24 CRAN (R 3.3.2)                
-#>  foreign      0.8-69     2017-06-21 cran (@0.8-69)                
-#>  formatR      1.4        2016-05-09 CRAN (R 3.3.2)                
-#>  ggplot2      2.2.1      2016-12-30 cran (@2.2.1)                 
-#>  glue         1.2.0      2017-10-29 cran (@1.2.0)                 
-#>  graphics   * 3.3.2      2017-04-27 local                         
-#>  grDevices  * 3.3.2      2017-04-27 local                         
-#>  grid         3.3.2      2017-04-27 local                         
-#>  gtable       0.2.0      2016-02-26 cran (@0.2.0)                 
-#>  highr        0.6        2016-05-09 CRAN (R 3.3.2)                
-#>  htmltools    0.3        2015-12-29 CRAN (R 3.3.2)                
-#>  knitr      * 1.12.3     2016-01-22 CRAN (R 3.3.2)                
-#>  labeling     0.3        2014-08-23 cran (@0.3)                   
-#>  lattice      0.20-34    2016-09-06 CRAN (R 3.3.2)                
-#>  lazyeval     0.2.1      2017-10-29 cran (@0.2.1)                 
-#>  magrittr     1.5        2014-11-22 CRAN (R 3.3.2)                
-#>  Matrix       1.2-7.1    2016-09-01 CRAN (R 3.3.2)                
-#>  memoise      1.1.0      2017-04-21 CRAN (R 3.3.2)                
-#>  methods      3.3.2      2017-04-27 local                         
-#>  mnormt       1.5-5      2016-10-15 cran (@1.5-5)                 
-#>  munsell      0.4.3      2016-02-13 cran (@0.4.3)                 
-#>  nlme         3.1-131    2017-02-06 CRAN (R 3.3.2)                
-#>  parallel     3.3.2      2017-04-27 local                         
-#>  pillar       1.1.0      2018-01-14 cran (@1.1.0)                 
-#>  pkgconfig    2.0.1      2017-03-21 cran (@2.0.1)                 
-#>  plyr         1.8.4      2016-06-08 cran (@1.8.4)                 
-#>  psych        1.7.8      2017-09-09 cran (@1.7.8)                 
-#>  purrr      * 0.2.4      2017-10-18 cran (@0.2.4)                 
-#>  R6           2.2.2      2017-06-17 cran (@2.2.2)                 
-#>  Rcpp         0.12.15    2018-01-20 cran (@0.12.15)               
-#>  reshape2   * 1.4.3      2017-12-11 cran (@1.4.3)                 
-#>  rlang        0.1.6      2017-12-21 cran (@0.1.6)                 
-#>  rmarkdown    0.9.5      2016-02-22 CRAN (R 3.3.2)                
-#>  scales       0.5.0      2017-08-24 cran (@0.5.0)                 
-#>  splines      3.3.2      2017-04-27 local                         
-#>  stats      * 3.3.2      2017-04-27 local                         
-#>  stringi      1.1.5      2017-04-07 CRAN (R 3.3.2)                
-#>  stringr      1.2.0      2017-02-18 CRAN (R 3.3.2)                
-#>  survival   * 2.40-1     2016-10-30 CRAN (R 3.3.2)                
-#>  survutils  * 1.0.0.9001 2018-02-07 local (tinyheero/survutils@NA)
-#>  tibble       1.4.2      2018-01-22 cran (@1.4.2)                 
-#>  tidyr        0.8.0      2018-01-29 cran (@0.8.0)                 
-#>  tools        3.3.2      2017-04-27 local                         
-#>  utils      * 3.3.2      2017-04-27 local                         
-#>  withr        1.0.2      2016-06-20 CRAN (R 3.3.2)                
+#>  package    * version    date       source                             
+#>  assertthat   0.2.0      2017-04-11 cran (@0.2.0)                      
+#>  base       * 3.3.2      2017-04-27 local                              
+#>  bindr        0.1        2016-11-13 cran (@0.1)                        
+#>  bindrcpp   * 0.2        2017-06-17 cran (@0.2)                        
+#>  broom        0.4.3      2017-11-20 cran (@0.4.3)                      
+#>  colorspace   1.3-2      2016-12-14 cran (@1.3-2)                      
+#>  datasets   * 3.3.2      2017-04-27 local                              
+#>  devtools     1.13.2     2017-06-02 CRAN (R 3.3.2)                     
+#>  digest       0.6.15     2018-01-28 cran (@0.6.15)                     
+#>  dplyr      * 0.7.4      2017-09-28 cran (@0.7.4)                      
+#>  evaluate     0.10.1     2017-06-24 CRAN (R 3.3.2)                     
+#>  foreign      0.8-69     2017-06-21 cran (@0.8-69)                     
+#>  formatR      1.4        2016-05-09 CRAN (R 3.3.2)                     
+#>  ggplot2      2.2.1      2016-12-30 cran (@2.2.1)                      
+#>  glue         1.2.0      2017-10-29 cran (@1.2.0)                      
+#>  graphics   * 3.3.2      2017-04-27 local                              
+#>  grDevices  * 3.3.2      2017-04-27 local                              
+#>  grid         3.3.2      2017-04-27 local                              
+#>  gtable       0.2.0      2016-02-26 cran (@0.2.0)                      
+#>  highr        0.6        2016-05-09 CRAN (R 3.3.2)                     
+#>  htmltools    0.3        2015-12-29 CRAN (R 3.3.2)                     
+#>  knitr      * 1.12.3     2016-01-22 CRAN (R 3.3.2)                     
+#>  labeling     0.3        2014-08-23 cran (@0.3)                        
+#>  lattice      0.20-34    2016-09-06 CRAN (R 3.3.2)                     
+#>  lazyeval     0.2.1      2017-10-29 cran (@0.2.1)                      
+#>  magrittr     1.5        2014-11-22 CRAN (R 3.3.2)                     
+#>  Matrix       1.2-7.1    2016-09-01 CRAN (R 3.3.2)                     
+#>  memoise      1.1.0      2017-04-21 CRAN (R 3.3.2)                     
+#>  methods      3.3.2      2017-04-27 local                              
+#>  mnormt       1.5-5      2016-10-15 cran (@1.5-5)                      
+#>  munsell      0.4.3      2016-02-13 cran (@0.4.3)                      
+#>  nlme         3.1-131    2017-02-06 CRAN (R 3.3.2)                     
+#>  parallel     3.3.2      2017-04-27 local                              
+#>  pillar       1.1.0      2018-01-14 cran (@1.1.0)                      
+#>  pkgconfig    2.0.1      2017-03-21 cran (@2.0.1)                      
+#>  plyr         1.8.4      2016-06-08 cran (@1.8.4)                      
+#>  psych        1.7.8      2017-09-09 cran (@1.7.8)                      
+#>  purrr      * 0.2.4      2017-10-18 cran (@0.2.4)                      
+#>  R6           2.2.2      2017-06-17 cran (@2.2.2)                      
+#>  Rcpp         0.12.15    2018-01-20 cran (@0.12.15)                    
+#>  reshape2   * 1.4.3      2017-12-11 cran (@1.4.3)                      
+#>  rlang        0.1.6      2017-12-21 cran (@0.1.6)                      
+#>  rmarkdown    0.9.5      2016-02-22 CRAN (R 3.3.2)                     
+#>  scales       0.5.0      2017-08-24 cran (@0.5.0)                      
+#>  splines      3.3.2      2017-04-27 local                              
+#>  stats      * 3.3.2      2017-04-27 local                              
+#>  stringi      1.1.5      2017-04-07 CRAN (R 3.3.2)                     
+#>  stringr      1.2.0      2017-02-18 CRAN (R 3.3.2)                     
+#>  survival   * 2.40-1     2016-10-30 CRAN (R 3.3.2)                     
+#>  survutils  * 1.0.0.9005 2018-02-08 local (tinyheero/survutils@1e1c76a)
+#>  tibble       1.4.2      2018-01-22 cran (@1.4.2)                      
+#>  tidyr        0.8.0      2018-01-29 cran (@0.8.0)                      
+#>  tools        3.3.2      2017-04-27 local                              
+#>  utils      * 3.3.2      2017-04-27 local                              
+#>  withr        1.0.2      2016-06-20 CRAN (R 3.3.2)                     
 #>  yaml         2.1.14     2016-11-12 CRAN (R 3.3.2)
 ```

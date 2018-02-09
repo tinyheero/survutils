@@ -1,12 +1,10 @@
 context("Cox regression")
 
 test_that("get_cox_res correctly checks inputs", {
-  library("survival")
-
   # Test the swapping of endpoint and endpoint code variables
   expect_error(
     get_cox_res(
-      colon, 
+      survival::colon, 
       endpoint = "status", endpoint.code = "time", 
       features = "age"
     )
@@ -16,12 +14,9 @@ test_that("get_cox_res correctly checks inputs", {
   expect_error(
     get_cox_res(colon, "time", "status", "age", "rx", "non_broom.fun_opt")
   )
-
 })
 
 test_that("get_cox_res runs univariate Cox regression on a single feature", {
-  library("survival")
-
   endpoint <- "time"
   endpoint.code <- "status"
   features <- "age"
@@ -45,6 +40,6 @@ test_that("get_cox_res runs univariate Cox regression on a single feature", {
       row.names = c(NA, -1L)
     )
 
-  out_df <- get_cox_res(colon, endpoint, endpoint.code, features)
+  out_df <- get_cox_res(survival::colon, endpoint, endpoint.code, features)
   expect_equal(object = out_df, expected = expected_out_df)
 })

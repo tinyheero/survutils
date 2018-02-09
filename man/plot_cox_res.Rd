@@ -6,7 +6,7 @@
 \usage{
 plot_cox_res(cox.res.df, x.lab, y.lab, y.col = "term", color.col,
   color.legend.name, coord.flip = FALSE, facet.formula = NULL,
-  facet.scales = "fixed")
+  facet.scales = "fixed", add_sig_line = TRUE)
 }
 \arguments{
 \item{cox.res.df}{data.frame output from \code{get_cox_res}.}
@@ -33,6 +33,10 @@ group is used in \code{get_cox_res} and \code{iter_get_cox_res}.}
 
 \item{facet.scales}{Parameter passed to the scales parameter in 
 \code{ggplot2::facet_grid}.}
+
+\item{add_sig_line}{Boolean to indicate if a red, dotted, vertical line 
+should be added to allow users to see if a Cox regression confidence 
+interval overlaps with 1.}
 }
 \value{
 Forest plot of cox regression results in the ggplot framework.
