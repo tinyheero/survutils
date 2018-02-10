@@ -12,12 +12,14 @@
 #' @export
 #' @examples 
 #' # Example taken from survC1
+#' \dontrun{
 #' library("survival")
 #' in.df <- survC1::CompCase(pbc[1:200, c(2:4,10:14)])
 #' in.df[, 2] <- as.numeric(in.df[,2]==2)
 #' tau <- 365.25*8
 #' prog.factor <- c("trt", "edema", "bili", "chol", "albumin", "copper")
 #' get_c_stat(in.df, "time", "status", prog.factor, tau)
+#' }
 get_c_stat <- function(in.df, endpoint, endpoint.code, prog.factor, tau.val) {
 
   message(paste0("Endpoint: ", endpoint))
