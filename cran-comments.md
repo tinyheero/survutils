@@ -1,6 +1,6 @@
 ## Test environments
 
-* local OS X install, 3.3.2
+* local OS X install, 3.4.2
 * ubuntu 14.04.5 LTS (on travis-ci), 3.4.2
 * win-builder (devel and release)
 
