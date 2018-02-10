@@ -27,7 +27,7 @@ TRUE, then this information is plotted along the x-axis using
 ggplot2::geom_errorbar(). This means that the x.lab and y.lab will be 
 flipped to.}
 
-\item{facet.formula}{Facet formula for facetting the plot. This should be
+\item{facet.formula}{Facet formula for faceting the plot. This should be
 used plotting results from \code{iter_get_cox_res} or when the parameter 
 group is used in \code{get_cox_res} and \code{iter_get_cox_res}.}
 
