@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_cox_summary.R
 \name{get_cox_summary}
 \alias{get_cox_summary}
-\title{Summarizes the Cox Regression Analsysis}
+\title{Summarizes the Cox Regression Analysis}
 \usage{
 get_cox_summary(cox.res, ci = 95)
 }

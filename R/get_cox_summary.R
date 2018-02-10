@@ -1,4 +1,4 @@
-#' Summarizes the Cox Regression Analsysis
+#' Summarizes the Cox Regression Analysis
 #'
 #' This function summarizes the results of a cox regression returning the
 #' results in a data.frame. It will calculate the confidence interval.
