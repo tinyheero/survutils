@@ -161,6 +161,7 @@ get_cox_res <- function(
 #' @return Forest plot of cox regression results in the ggplot framework.
 #' @export
 #' @examples
+#' \dontrun{
 #' library("survival")
 #' library("magrittr")
 #' library("dplyr")
@@ -199,6 +200,7 @@ get_cox_res <- function(
 #'                color.col = "sig_flag", 
 #'                color.legend.name = "Significant Flag", 
 #'                coord.flip = TRUE)
+#' }
 plot_cox_res <- function(
   cox.res.df, 
   x.lab, y.lab, y.col = "term", 

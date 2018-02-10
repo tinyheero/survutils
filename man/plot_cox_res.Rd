@@ -47,6 +47,7 @@ a forest plot showing the hazard ratio and confidence interval of the cox
 cox regression.
 }
 \examples{
+\dontrun{
 library("survival")
 library("magrittr")
 library("dplyr")
@@ -85,4 +86,5 @@ cox.res.df \%>\%
                color.col = "sig_flag", 
                color.legend.name = "Significant Flag", 
                coord.flip = TRUE)
+}
 }
